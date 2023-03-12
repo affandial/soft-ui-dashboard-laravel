@@ -13,7 +13,7 @@
                     <div class="col-auto my-auto">
                         <div class="h-100">
                             <h5 class="mb-1">
-                                TAMBAH DAFTAR PENANGANAN PASIEN
+                                TAMBAH PASIEN YANG SUDAH DITANGANI
                             </h5>
                             <p class="mb-0 font-weight-bold text-sm">
                                 Harap isi semua kolom yang tersedia
@@ -28,7 +28,7 @@
             <div class="card">
 
                 <div class="card-body pt-4 p-3">
-                    <form action="add-dokter" method="POST" role="form text-left">
+                    <form action="add-treatment " method="POST" role="form text-left" onsubmit="return konfirmasiSubmit()">
                         @csrf
                         @if ($errors->any())
                             <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
@@ -50,7 +50,7 @@
                             </div>
                         @endif
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="no_kwitansi" class="form-control-label">Nomor Kwitansi</label>
                                     <div>
@@ -59,7 +59,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="date"> Tanggal</label>
+                                    <div style="">
+                                        <input type="date" class="form-control" id="date" name="date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="price" class="form-control-label">Total Pembayaran</label>
                                     <div>
@@ -73,33 +81,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="phone" class="form-control-label" >Nama Pasien</label>
-                                    <div>
-                                        <input class="form-control" type="text" placeholder="Masukkan nomor telepon"
-                                            id="phone" name="phone" autocomplete="off"  required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user.location" class="form-control-label" >Alamat</label>
-                                    <div>
-                                        <input class="form-control" type="text" placeholder="Sialhkan masukkan alamat"
-                                            id="address" required name="address" autocomplete="off">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label for="patient_id" class="form-control-label">Nama Pasien</label>
                                     <div style="">
                                         <select name="patient_id" id="patient_id" class="form-select"
                                             aria-label="Disabled select example" required>
                                             <option selected value="">Pilih</option>
                                             @foreach ($patientId as $patient)
-                                            <option value="{{$patient->id}}">{{$patient->name}}</option>
+                                            <option value="{{$patient->id}}">{{$patient->name}} -  {{$patient->phone_no}} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -111,32 +99,21 @@
                                             aria-label="Disabled select example" required>
                                             <option selected value="">Pilih</option>
                                             @foreach ($dentistId as $dentist)
-                                            <option value="{{$dentist->id}}">{{$dentist->name}}</option>
+                                            <option value="{{$dentist->id}}">{{$dentist->name}} </option>
                                             @endforeach
                                         </select>
                                     </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                     <label for="specialty" class="form-control-label">Specialty</label>
-                                    <div>
-                                        <input class="form-control" type="text" placeholder="Masukkan Specialty"
-                                            id="specialty" required name="specialty" autocomplete="off" style="max-width: 200px">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group">
-                        <label for="description">Type Penanganan Pasien</label>
-                        <div class="@error('user.about')border border-danger rounded-3 @enderror">
-                            <input type="text" class="form-control" id="about" rows="2" placeholder="Type Penanganan Terhadap Pasien contoh : 'Tambal Gigi, Bersihkan Karang'" name="description"></textarea>
+                        <label for="type">Type Penanganan Pasien</label>
+                        <div class="@error('user.type')border border-danger rounded-3 @enderror">
+                            <input type="text" class="form-control" required id="type" name="type" rows="2" placeholder="Type Penanganan Terhadap Pasien contoh : 'Tambal Gigi, Bersihkan Karang'" name="description"></textarea>
                         </div>
                         <div class="form-group">
                         <label for="description">Deskripsi Penanganan Pasien</label>
                         <div class="@error('user.about')border border-danger rounded-3 @enderror">
-                            <textarea class="form-control" id="about" rows="3" placeholder="Deskripsi Penanganan Terhadap Pasien" name="description"></textarea>
+                            <textarea class="form-control" required id="description" name="description" rows="3" placeholder="Deskripsi Penanganan Terhadap Pasien" name="description"></textarea>
                         </div>
                     </div>
                         <div class="d-flex justify-content-end">
@@ -147,4 +124,15 @@
             </div>
         </div>
     </div>
+    <script>
+        function konfirmasiSubmit() {
+            var elemen = document.getElementById("no_kwitansi");
+          if(confirm("Apakah data sudah sesuai?")) {
+            
+            return true;
+          } else {
+            return false;
+          }
+        }
+      </script>
 @endsection

@@ -5,7 +5,7 @@
 <div>
   <div class="alert alert-secondary mx-4" role="alert">
     <span class="text-white">
-      <center><strong>Daftar Jadwal Besok</strong></center>
+      <center><strong>Daftar Pasien Besok</strong></center>
 
     </span>
   </div>
