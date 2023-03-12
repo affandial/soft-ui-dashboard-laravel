@@ -16,9 +16,9 @@ return new class extends Migration
     Schema::create('appointments', function (Blueprint $table) {
       $table->increments('id');
       $table->date('date');
-      $table->unsignedInteger('patient_id');
       $table->string('status');
-      $table->foreign('patient_id')->references('id')->on('patients');
+      $table->unsignedInteger('patient_id');
+      $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
       $table->timestamps();
     });
   }

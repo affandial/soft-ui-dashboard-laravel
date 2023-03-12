@@ -73,6 +73,9 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('data-patient', [PatientController::class, 'index']);
   Route::get('add-patient', [PatientController::class, 'create']);
   Route::post('add-patient', [PatientController::class, 'store']);
+  Route::delete('data-patient', [PatientController::class, 'destroy']);
+  Route::get('edit-patient', [PatientController::class, 'index_edit']);
+  Route::post('edit-patient', [PatientController::class, 'update']);
 
 
   Route::get('/logout', [SessionsController::class, 'destroy']);

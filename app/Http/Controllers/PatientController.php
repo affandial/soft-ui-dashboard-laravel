@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -13,6 +14,12 @@ class PatientController extends Controller
     return view('laravel-examples/data-patient', ['data' => $data]);
   }
 
+  public function index_edit()
+  {
+    Log::channel('stderr')->info('dsa');
+    return view('laravel-examples/add-patient');
+  }
+
   public function create()
   {
     return view('laravel-examples/add-patient');
@@ -21,9 +28,9 @@ class PatientController extends Controller
   public function  store(Request $request)
   {
     $data = request()->validate([
-      'name'      => ['required','min:4'],
-      'phone_no'  => ['required','max:15'],
-      'gender'    => ['required','max:6'],
+      'name'      => ['required', 'min:4'],
+      'phone_no'  => ['required', 'max:15'],
+      'gender'    => ['required', 'max:6'],
     ]);
 
     Patient::create([
@@ -38,5 +45,11 @@ class PatientController extends Controller
     //redirect to form add-patient
     return redirect('/add-patient')->with('success', 'Data Pasien Berhasil diinput');
   }
-}
 
+  public function destroy(Request $request)
+  {
+    $patient = Patient::findOrFail($request->id);
+    $patient->delete();
+    return redirect('/data-patient')->with('success', 'Data Pasien Berhasil dihapus');
+  }
+}

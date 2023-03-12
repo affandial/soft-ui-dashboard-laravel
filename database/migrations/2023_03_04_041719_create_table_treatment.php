@@ -19,9 +19,9 @@ return new class extends Migration
           $table->date('date');
           $table->integer('price');
           $table->unsignedInteger('patient_id');
-          $table->foreign('patient_id')->references('id')->on('patients');
+          $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
           $table->unsignedInteger('dentist_id');
-          $table->foreign('dentist_id')->references('id')->on('dentists');
+          $table->foreign('dentist_id')->references('id')->on('dentists')->onDelete("no action");
           $table->text('type');
           $table->timestamps();
         });
