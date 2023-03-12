@@ -4,9 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
-class UserSeeder extends Seeder
+class DataAppoinment extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,11 +14,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        DB::table('appointments')->insert([
             'id' => 1,
-            'username' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin'),
+            'patient_id' =>1 ,
+            'status' => 'confirm',
+            'date' => '2023-03-12',
             'created_at' => now(),
             'updated_at' => now()
         ]);

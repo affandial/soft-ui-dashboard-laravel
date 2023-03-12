@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('treatment', function (Blueprint $table) {
+        Schema::create('treatments', function (Blueprint $table) {
           $table->string('no_kwitansi')->primary();
-          $table->string('description')->nullable();
+          $table->text('description')->nullable();
           $table->date('date');
           $table->integer('price');
           $table->unsignedInteger('patient_id');
-          $table->foreign('patient_id')->references('id')->on('patient');
+          $table->foreign('patient_id')->references('id')->on('patients');
           $table->unsignedInteger('dentist_id');
-          $table->foreign('dentist_id')->references('id')->on('dentist');
-          $table->string('type');
+          $table->foreign('dentist_id')->references('id')->on('dentists');
+          $table->text('type');
           $table->timestamps();
         });
     }

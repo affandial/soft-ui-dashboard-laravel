@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('patient', function (Blueprint $table) {
+        Schema::create('patients', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('gender');
-            $table->string('address');
+            $table->string('address')->nullable();;
             $table->string('phone_no');
-            $table->date('birthdate');
-            $table->string('email')->unique();
+            $table->date('birthdate')->nullable();;
+            $table->string('email')->unique()->nullable();;
             $table->timestamps();
         });
     }

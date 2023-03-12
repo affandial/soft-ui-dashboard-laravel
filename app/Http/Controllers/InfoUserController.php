@@ -13,7 +13,7 @@ class InfoUserController extends Controller
 
     public function create()
     {
-        return view('laravel-examples/user-profile');
+        return view('laravel-examples/add-patient');
     }
 
     public function store(Request $request)
@@ -31,27 +31,25 @@ class InfoUserController extends Controller
             if(env('IS_DEMO') && Auth::user()->id == 1)
             {
                 return redirect()->back()->withErrors(['msg2' => 'You are in a demo version, you can\'t change the email address.']);
-                
+
             }
-            
+
         }
         else{
             $attribute = request()->validate([
                 'email' => ['required', 'email', 'max:50', Rule::unique('users')->ignore(Auth::user()->id)],
             ]);
         }
-        
-        
+
+
         User::where('id',Auth::user()->id)
         ->update([
-            'name'    => $attributes['name'],
+            'username'    => $attributes['name'],
             'email' => $attribute['email'],
-            'phone'     => $attributes['phone'],
-            'location' => $attributes['location'],
-            'about_me'    => $attributes["about_me"],
+
         ]);
 
 
-        return redirect('/user-profile')->with('success','Profile updated successfully');
+        return redirect('/add-patient')->with('success','Profile updated successfully');
     }
 }

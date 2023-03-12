@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class treatment extends Model
+class Treatment extends Model
 {
   use HasFactory;
   protected $fillable = [
@@ -15,5 +15,8 @@ class treatment extends Model
     'price',
     'patient_id',
     'dentist_id',
+    'type'
   ];
+
+
 }
