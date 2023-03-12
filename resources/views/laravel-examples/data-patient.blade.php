@@ -88,7 +88,7 @@
                                             <td class="text-center">
                                                 <form onsubmit="return confirm('Apakah Anda Yakin Untuk Menghapus data pasien {{$treat->name}}?');" action=""
                                                     method="POST">
-                                                    <a href="/edit-patient" class="mx-3" data-bs-toggle="tooltip"
+                                                    <a href="{{ route('editpatient', $treat->id) }}" class="mx-3" data-bs-toggle="tooltip"
                                                         data-bs-original-title="Edit Pasien">
                                                         <i class="fas fa-user-edit text-secondary"></i>
                                                     </a>
@@ -97,7 +97,6 @@
                                                     @csrf @method('DELETE') <button type="submit"><i
                                                             class="cursor-pointer fas fa-trash text-secondary"></i></button>
                                                 </form>
-
 
 
                                             </td>

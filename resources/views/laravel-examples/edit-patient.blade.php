@@ -13,10 +13,10 @@
                     <div class="col-auto my-auto">
                         <div class="h-100">
                             <h5 class="mb-1">
-                                TAMBAH DATA PASIEN
+                                EDIT DATA PASIEN
                             </h5>
                             <p class="mb-0 font-weight-bold text-sm">
-                                Silahkan isi data pasien
+                                Form Rubah data Pasien
                             </p>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
             <div class="card">
 
                 <div class="card-body pt-4 p-3">
-                    <form action="/add-patient" method="POST" role="form text-left">
+                    <form action="/edit-patient" method="POST" role="form text-left">
                         @csrf
                         @if ($errors->any())
                             <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
@@ -49,12 +49,14 @@
                                 </button>
                             </div>
                         @endif
+                        @foreach  ($data as $d)
                         <div class="row">
+                            <input type="hidden" value="{{$d->id}}" name="id" id="id">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name" class="form-control-label">Nama</label>
                                     <div>
-                                        <input class="form-control" type="text" placeholder="Silahkan input nama"
+                                        <input class="form-control" value ="{{$d->name}}" type="text" placeholder="Silahkan input nama"
                                             id="name" name="name" autocomplete="off" required>
                                     </div>
                                 </div>
@@ -63,19 +65,20 @@
                                 <div class="form-group">
                                     <label for="email" class="form-control-label">Email</label>
                                     <div>
-                                        <input class="form-control" type="email" placeholder="Silahkan masukkan email "
+                                        <input class="form-control" value ="{{$d->email}}" type="email" placeholder="Silahkan masukkan email "
                                             id="email" name="email" autocomplete="off" >
 
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        @endforeach
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="phone_no" class="form-control-label" >Nomor Telepon</label>
                                     <div>
-                                        <input class="form-control" type="number" placeholder="Masukkan nomor telepon"
+                                        <input class="form-control" value ="{{$d->phone_no}}" type="number" placeholder="Masukkan nomor telepon"
                                             id="phone_no" name="phone_no" autocomplete="off"  required>
                                     </div>
                                 </div>
@@ -84,7 +87,7 @@
                                 <div class="form-group">
                                     <label for="user.location" class="form-control-label">Alamat</label>
                                     <div>
-                                        <input class="form-control" type="text" placeholder="Sialhkan masukkan alamat"
+                                        <input class="form-control" value ="{{$d->address}}" type="text" placeholder="Sialhkan masukkan alamat"
                                             id="address" name="address" autocomplete="off">
                                     </div>
                                 </div>
@@ -97,7 +100,7 @@
                                     <div style="max-width: 200px">
                                         <select name="gender" id="gender" class="form-select"
                                             aria-label="Disabled select example" required>
-                                            <option selected value="">Pilih</option>
+                                            <option selected value ="{{$d->gender}}">Pilih</option>
                                             <option value="pria">Pria</option>
                                             <option value="wanita">Wanita</option>
 
@@ -110,7 +113,7 @@
                                 <div class="form-group">
                                     <label for="tanggal"> Tanggal Lahir</label>
                                     <div style="max-width: 200px">
-                                        <input type="date" class="form-control" id="birthdate" name="birthdate">
+                                        <input type="date" value ="{{$d->birthdate}}" class="form-control" id="birthdate" name="birthdate">
                                     </div>
                                 </div>
                             </div>

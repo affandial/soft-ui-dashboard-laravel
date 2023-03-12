@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DentistController;
 use App\Http\Controllers\TreatmentController;
 use App\Http\Controllers\HomeController;
@@ -29,9 +30,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth'], function () {
 
   Route::get('/', [HomeController::class, 'home']);
-  Route::get('dashboard', function () {
-    return view('dashboard');
-  })->name('dashboard');
+  Route::get('dashboard', [DashboardController::class, 'index']);
+  // Route::get('dashboard', function () {
+  //   return view('dashboard');
+  // })->name('dashboard');
 
   // Route::get('treatment', function () {
   //   return view('laravel-examples/treatment');
@@ -74,7 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('add-patient', [PatientController::class, 'create']);
   Route::post('add-patient', [PatientController::class, 'store']);
   Route::delete('data-patient', [PatientController::class, 'destroy']);
-  Route::get('edit-patient', [PatientController::class, 'index_edit']);
+  Route::get('edit-patient/{id}', [PatientController::class, 'index_edit'])->name('editpatient');
   Route::post('edit-patient', [PatientController::class, 'update']);
 
 

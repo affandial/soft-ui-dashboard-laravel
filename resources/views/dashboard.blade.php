@@ -1,7 +1,7 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-
+@csrf
 <div class="row">
   <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
     <div class="card">
@@ -11,7 +11,7 @@
             <div class="numbers">
               <p class="text-sm mb-0 text-capitalize font-weight-bold">Pasien</p>
               <h5 class="font-weight-bolder mb-0">
-                -
+                {{$patient}}
 
               </h5>
             </div>
@@ -33,7 +33,7 @@
             <div class="numbers">
               <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokter</p>
               <h5 class="font-weight-bolder mb-0">
-                -
+                {{$dentist}}
               </h5>
             </div>
           </div>
@@ -52,9 +52,9 @@
         <div class="row">
           <div class="col-8">
             <div class="numbers">
-              <p class="text-sm mb-0 text-capitalize font-weight-bold">Terkonfirmasi</p>
+              <p class="text-sm mb-0 text-capitalize font-weight-bold">Treatment</p>
               <h5 class="font-weight-bolder mb-0">
-                -
+                {{$treatment}}
               </h5>
             </div>
           </div>
@@ -67,7 +67,7 @@
       </div>
     </div>
   </div>
-  <div class="col-xl-3 col-sm-6">
+  <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4"">
     <div class="card">
       <div class="card-body p-3">
         <div class="row">
@@ -75,7 +75,7 @@
             <div class="numbers">
               <p class="text-sm mb-0 text-capitalize font-weight-bold">Dibatalkan</p>
               <h5 class="font-weight-bolder mb-0">
-                -
+                {{$canceled}}
               </h5>
             </div>
           </div>
