@@ -46,9 +46,17 @@ class TreatmentController extends Controller
       'description'   => ['required'],
     ]);
 
-    Treatment::create($data);
+    try {
+      Treatment::create($data);
+    } catch (\Illuminate\Database\QueryException $e) {
+      if ($e->errorInfo[1] == 1062) { // error code for duplicate entry
+        return redirect()->back()->withErrors(['message' => ' No Kwintasi sudah ada, silahkan input kembali']);
+      } else {
+        return redirect()->back()->withErrors(['message' => 'Gagal Input data, harap periksa data yang ada inpu. Silahkan coba lagi.']);
+      }
+    }
 
-    //redirect to form add-patient
-    return redirect('/add-treatment')->with('success', 'Daftar Penanganan Pasien Berhasil ditambahkan');
+    //redirect to
+    return redirect()->back()->with('success', 'Daftar Penanganan Pasien Berhasil ditambahkan');
   }
 }

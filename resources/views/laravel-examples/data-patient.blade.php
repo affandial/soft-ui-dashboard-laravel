@@ -10,8 +10,8 @@
         <div class="row">
             @csrf
             <div class="col-12">
-                @if (session('success'))
-                    <div class="m-3  alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
+              @if (session('success'))
+                    <div class="m-4 alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
                         <span class="alert-text text-white">
                             {{ session('success') }}</span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
@@ -20,6 +20,8 @@
                     </div>
                 @endif
                 <div class="card mb-4 mx-4">
+
+
                     <div class="card-header pb-0">
                         <div class="d-flex flex-row justify-content-between">
                             <div>
@@ -95,11 +97,9 @@
                                                     </a>
                                                     <input type="hidden" value="{{ $treat->id }}" name="id"
                                                         id="id">
-                                                    @csrf @method('DELETE') <button type="submit"><i title="Hapus Data Pasien"
+                                                    @csrf @method('DELETE')<button  style="border: none;background-color: Transparent" type="submit"><i title="Hapus Data Pasien"
                                                             class="cursor-pointer fas fa-trash text-secondary"></i></button>
                                                 </form>
-
-
                                             </td>
                                         </tr>
                                         <?php $a++; ?>
@@ -107,11 +107,23 @@
                                 </tbody>
                             </table>
                         </div>
-                        <p class="text-xs font-weight-bold m-2">Halaman : {{ $data->currentPage() }}</p>
-                        <p class="text-xs font-weight-bold m-2">Jumlah Data : {{ $data->total() }}</p>
+                        <hr>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $data->previousPageUrl() }}" >back</a>
+                                </li>
+                                <li class="page-item  disabled"><a class="page-link" href="#"> {{ $data->currentPage() }}</a></li>
+
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $data->nextPageUrl() }}">next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr>
+                        <p class="text-xs font-weight-bold m-2">Jumlah Pasien : {{ $data->total() }}</p>
                         <p class="text-xs font-weight-bold m-2">Data Per Halaman : {{ $data->perPage() }} </p>
-                        <p class="text-xs font-weight-bold m-2"> <a href="{{ $data->previousPageUrl() }}">PREVIOUS PAGE</a>
-                            || <a href="{{ $data->nextPageUrl() }}">NEXT PAGE</a></p>
+
                     </div>
                 </div>
             </div>

@@ -101,11 +101,22 @@
                                 </tbody>
                             </table>
                         </div>
-                        <p class="text-xs font-weight-bold m-2">Halaman : {{ $data->currentPage() }}</p>
-                        <p class="text-xs font-weight-bold m-2">Jumlah Data : {{ $data->total() }}</p>
+                         <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $data->previousPageUrl() }}" >back</a>
+                                </li>
+                                <li class="page-item  disabled"><a class="page-link" href="#"> {{ $data->currentPage() }}</a></li>
+
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $data->nextPageUrl() }}">next</a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                        <hr>
+                        <p class="text-xs font-weight-bold m-2">Jumlah Treatment : {{ $data->total() }}</p>
                         <p class="text-xs font-weight-bold m-2">Data Per Halaman : {{ $data->perPage() }} </p>
-                        <p class="text-xs font-weight-bold m-2"> <a href="{{ $data->previousPageUrl() }}">PREVIOUS PAGE</a>
-                            || <a href="{{ $data->nextPageUrl() }}">NEXT PAGE</a></p>
                     </div>
                 </div>
             </div>

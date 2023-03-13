@@ -13,10 +13,10 @@
                     <div class="col-auto my-auto">
                         <div class="h-100">
                             <h5 class="mb-1">
-                                TAMBAH PASIEN YANG SUDAH DITANGANI
+                                TAMBAH JADWAL BARU
                             </h5>
                             <p class="mb-0 font-weight-bold text-sm">
-                                Harap isi semua kolom yang tersedia
+                                Harap isi semua data yang tersedia
                             </p>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
         <div class="container-fluid py-4">
             <div class="card">
                 <div class="card-body pt-4 p-3">
-                    <form action="add-treatment" method="POST" role="form text-left" onsubmit="return konfirmasiSubmit()">
+                    <form action="add-jadwal" method="POST" role="form text-left" onsubmit="return konfirmasiSubmit()">
                         @csrf
                         @if ($errors->any())
                             <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
@@ -51,28 +51,9 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="no_kwitansi" class="form-control-label">Nomor Kwitansi</label>
-                                    <div>
-                                        <input class="form-control" type="text" placeholder="Silahkan masukkan nomor kwitansi"
-                                            id="no_kwitansi" name="no_kwitansi" autocomplete="off" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
                                     <label for="date"> Tanggal</label>
                                     <div style="">
-                                        <input type="date" class="form-control" id="date" name="date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="price" class="form-control-label">Total Pembayaran</label>
-                                    <div>
-                                        <input class="form-control" type="number" placeholder="Total Biaya Penanganan Pasien"
-                                            id="price" required name="price" autocomplete="off" >
-
+                                        <input type="date" required class="form-control" id="date" name="date">
                                     </div>
                                 </div>
                             </div>
@@ -86,50 +67,30 @@
                                             aria-label="Disabled select example" required>
                                             <option selected value="">Pilih</option>
                                             @foreach ($patientId as $patient)
-                                            <option value="{{$patient->id}}">{{$patient->name}} -  {{$patient->phone_no}} </option>
+                                                <option value="{{ $patient->id }}">{{ $patient->name }} -
+                                                    {{ $patient->phone_no }} </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                 <div class="form-group">
-                                    <label for="dentist_id" class="form-control-label">Dokter Yang Menangani</label>
-                                    <div style="">
-                                        <select name="dentist_id" id="dentist_id" class="form-select"
-                                            aria-label="Disabled select example" required>
-                                            <option selected value="">Pilih</option>
-                                            @foreach ($dentistId as $dentist)
-                                            <option value="{{$dentist->id}}">{{$dentist->name}} </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                        <label for="type">Type Penanganan Pasien</label>
-                        <div class="@error('user.type')border border-danger rounded-3 @enderror">
-                            <input type="text" class="form-control" required id="type" name="type" rows="2" placeholder="Type Penanganan Terhadap Pasien contoh : 'Tambal Gigi, Bersihkan Karang'" name="description"></textarea>
-                        </div>
-                        <div class="form-group">
-                        <label for="description">Deskripsi Penanganan Pasien</label>
-                        <div class="@error('user.about')border border-danger rounded-3 @enderror">
-                            <textarea class="form-control" required id="description" name="description" rows="3" placeholder="Deskripsi Penanganan Terhadap Pasien" name="description"></textarea>
-                        </div>
-                    </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Simpan</button>
                         </div>
-                    </form>
                 </div>
+                </form>
             </div>
         </div>
     </div>
+
     <script>
         function konfirmasiSubmit() {
-          if(confirm("Check Kembali Data anda, jika sudah sesuai silahkan click ok?")) {
-            return true;
-          } else {
-            return false;
-          }
+            if (confirm("Apakah tanggal dan nama pasien sudah sesuai?")) {
+                return true;
+            } else {
+                return false;
+            }
         }
-      </script>
+    </script>
 @endsection

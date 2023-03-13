@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\QueryException;
 
 class PatientController extends Controller
 {
@@ -24,7 +24,7 @@ class PatientController extends Controller
 
   public function update(Request $request)
   {
-    // Log::channel('stderr')->info($request);
+    Log::channel('stderr')->info("GAGAL".$request);
     $record = Patient::findOrFail($request->id);
 
     $check = request()->validate([
@@ -33,17 +33,30 @@ class PatientController extends Controller
       'gender'    => ['required', 'max:6'],
     ]);
 
-    $record->update([
-      'name'      => $request['name'],
-      'phone_no'  => $request['phone_no'],
-      'email'     => $request['email'],
-      'gender'    => $request['gender'],
-      'address'   => $request['address'],
-      'birthdate' => $request['birthdate'],
-    ]);
+
+    try {
+      $record->update([
+        'name'      => $request['name'],
+        'phone_no'  => $request['phone_no'],
+        'email'     => $request['email'],
+        'gender'    => $request['gender'],
+        'address'   => $request['address'],
+        'birthdate' => $request['birthdate'],
+      ]);
+    } catch (QueryException $e) {
+      if ($e->errorInfo[1] == 1062) { // error code for duplicate entry
+        return redirect()->back()->withErrors(['message' => 'Gagal ubah data pasien, Email / no telepon sudah terdaftar.']);
+      } else {
+        return redirect()->back()->withErrors(['message' => 'Gagal ubah data pasien, Harap periksa data yang ada input']);
+      }
+    }
+
     Log::channel('stderr')->info("Id $request->id berhasil di update");
     $data = Patient::latest()->paginate(20);
-    return view('laravel-examples/data-patient',['data'=>$data])->with('success', 'Data Pasien Berhasil diubah');
+    return redirect('data-patient')->with([
+      'data' => $data,
+      'success' => 'Data Pasien Berhasil diubah'
+    ] );
   }
 
   public function create()
@@ -59,17 +72,25 @@ class PatientController extends Controller
       'gender'    => ['required', 'max:6'],
     ]);
 
-    Patient::create([
-      'name'      => $request['name'],
-      'phone_no'  => $request['phone_no'],
-      'email'     => $request['email'],
-      'gender'    => $request['gender'],
-      'address'   => $request['address'],
-      'birthdate' => $request['birthdate'],
-    ]);
 
+    try {
+      Patient::create([
+        'name'      => $request['name'],
+        'phone_no'  => $request['phone_no'],
+        'email'     => $request['email'],
+        'gender'    => $request['gender'],
+        'address'   => $request['address'],
+        'birthdate' => $request['birthdate'],
+      ]);
+    } catch (QueryException $e) {
+      if ($e->errorInfo[1] == 1062) { // error code for duplicate entry
+        return redirect()->back()->withErrors(['message' => 'Email / no telepon sudah terdaftar. silahkan input kembali']);
+      } else {
+        return redirect()->back()->withErrors(['message' => 'harap periksa data yang ada inpuT. Silahkan coba lagi.']);
+      }
+    }
     //redirect to form add-patient
-    return redirect('/add-patient')->with('success', 'Data Pasien Berhasil diinput');
+    return redirect()->back()->with('success', 'Data Pasien Berhasil diinput');
   }
 
   public function destroy(Request $request)
