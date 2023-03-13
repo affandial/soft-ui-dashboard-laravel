@@ -63,6 +63,14 @@ class AppointmentController extends Controller
   }
   public function store(Request $request)
   {
+    Log::channel('stderr')->info("Parent :  Controller Store");
+    $data = request()->validate([
+      'patient_id'      => ['required'],
+      'date'     => ['required', 'date', 'after_or_equal:today']
+    ]);
+    $data['status'] = 'pending';
+    Appointment::create($data);
+    return redirect()->back()->with(['success' => 'Jadwal berhasil di buat']);
   }
 
 }

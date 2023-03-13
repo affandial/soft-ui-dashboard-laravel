@@ -7,7 +7,7 @@
           © <script>
             document.write(new Date().getFullYear())
           </script>, made with <i class="fa fa-heart"></i> by
-          <a href="https://wa.me/6281212345678?text=Halo,%20saya%20ingin%20informasi%20terkait%20klinik%20gigi" class="font-weight-bold" target="_blank"> Tim Unpam </a>
+          <a href="https://wa.me/6285813177600?text=Halo,%20saya%20ingin%20informasi%20terkait%20klinik%20gigi" class="font-weight-bold" target="_blank"> Tim Unpam </a>
           untuk pengelolaan Klinik Gigi Jayanti
         </div>
       </div>
