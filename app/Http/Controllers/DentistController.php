@@ -14,6 +14,33 @@ class DentistController extends Controller
     return view('laravel-examples/data-dokter', ['data' => $data]);
   }
 
+  public function index_edit($id)
+  {
+    // Log::channel('stderr')->info($id);
+    $data = Dentist::where('id', '=', $id)->get();
+    return view('laravel-examples/edit-dokter ', ['data' => $data]);
+  }
+
+  public function update(Request $request)
+  {
+    // Log::channel('stderr')->info($request);
+    $record = Dentist::findOrFail($request->id);
+
+    $check = request()->validate([
+      'name'      => ['required', 'min:4'],
+      'email'     => ['required', 'min:5'],
+      'phone'     => ['required'],
+      'address'   => ['required', 'max:255'],
+      'gender'    => ['required'],
+      'specialty' => ['required'],
+    ]);
+
+    $record->update($check);
+    Log::channel('stderr')->info("Data doker ID = $request->id berhasil di update");
+    $data = Dentist::latest()->paginate(20);
+    return view('laravel-examples/data-dentist', ['data' => $data])->with('success', 'Data Pasien Berhasil diubah');
+  }
+
   public function create()
   {
     return view('laravel-examples/add-dokter');

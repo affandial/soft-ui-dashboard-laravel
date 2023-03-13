@@ -26,7 +26,7 @@ class PatientController extends Controller
   {
     // Log::channel('stderr')->info($request);
     $record = Patient::findOrFail($request->id);
-    
+
     $check = request()->validate([
       'name'      => ['required', 'min:4'],
       'phone_no'  => ['required', 'max:15'],
@@ -43,7 +43,7 @@ class PatientController extends Controller
     ]);
     Log::channel('stderr')->info("Id $request->id berhasil di update");
     $data = Patient::latest()->paginate(20);
-    return view('laravel-examples/data-patient',['data'=>$data]);
+    return view('laravel-examples/data-patient',['data'=>$data])->with('success', 'Data Pasien Berhasil diubah');
   }
 
   public function create()

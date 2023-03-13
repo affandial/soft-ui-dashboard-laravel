@@ -10,15 +10,15 @@
         <div class="row">
             @csrf
             <div class="col-12">
-              @if (session('success'))
-                <div class="m-3  alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
-                    <span class="alert-text text-white">
-                        {{ session('success') }}</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                        <i class="fa fa-close" aria-hidden="true"></i>
-                    </button>
-                </div>
-            @endif
+                @if (session('success'))
+                    <div class="m-3  alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
+                        <span class="alert-text text-white">
+                            {{ session('success') }}</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <i class="fa fa-close" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                @endif
                 <div class="card mb-4 mx-4">
                     <div class="card-header pb-0">
                         <div class="d-flex flex-row justify-content-between">
@@ -86,15 +86,16 @@
                                                     class="text-secondary text-xs font-weight-bold">{{ $treat->birthdate }}</span>
                                             </td>
                                             <td class="text-center">
-                                                <form onsubmit="return confirm('Apakah Anda Yakin Untuk Menghapus data pasien {{$treat->name}}?');" action=""
-                                                    method="POST">
-                                                    <a href="{{ route('editpatient', $treat->id) }}" class="mx-3" data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Edit Pasien">
+                                                <form
+                                                    onsubmit="return confirm('Apakah Anda Yakin Untuk Menghapus data pasien {{ $treat->name }}?');"
+                                                    action="" method="POST">
+                                                    <a href="{{ route('editpatient', $treat->id) }}" class="mx-3"
+                                                        data-bs-toggle="tooltip" data-bs-original-title="Ubah Data Pasien">
                                                         <i class="fas fa-user-edit text-secondary"></i>
                                                     </a>
                                                     <input type="hidden" value="{{ $treat->id }}" name="id"
                                                         id="id">
-                                                    @csrf @method('DELETE') <button type="submit"><i
+                                                    @csrf @method('DELETE') <button type="submit"><i title="Hapus Data Pasien"
                                                             class="cursor-pointer fas fa-trash text-secondary"></i></button>
                                                 </form>
 

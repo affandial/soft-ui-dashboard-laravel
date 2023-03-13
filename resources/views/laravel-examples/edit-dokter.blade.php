@@ -13,10 +13,10 @@
                     <div class="col-auto my-auto">
                         <div class="h-100">
                             <h5 class="mb-1">
-                                EDIT DATA PASIEN
+                                UBAH DATA DOKTER
                             </h5>
                             <p class="mb-0 font-weight-bold text-sm">
-                                Form Rubah data Pasien
+                                Form ini untuk mengubah data dokter
                             </p>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
             <div class="card">
 
                 <div class="card-body pt-4 p-3">
-                    <form action="/edit-patient" method="POST" role="form text-left">
+                    <form action="" method="POST" role="form text-left">
                         @csrf
                         @if ($errors->any())
                             <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
@@ -51,7 +51,6 @@
                         @endif
                         @foreach  ($data as $d)
                         <div class="row">
-                            <input type="hidden" value="{{$d->id}}" name="id" id="id">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name" class="form-control-label">Nama</label>
@@ -66,29 +65,28 @@
                                     <label for="email" class="form-control-label">Email</label>
                                     <div>
                                         <input class="form-control" value ="{{$d->email}}" type="email" placeholder="Silahkan masukkan email "
-                                            id="email" name="email" autocomplete="off" >
+                                            id="email" required name="email" autocomplete="off" >
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="phone_no" class="form-control-label" >Nomor Telepon</label>
+                                    <label for="phone" class="form-control-label" >Nomor Telepon</label>
                                     <div>
-                                        <input class="form-control" value ="{{$d->phone_no}}" type="number" placeholder="Masukkan nomor telepon"
-                                            id="phone_no" name="phone_no" autocomplete="off"  required>
+                                        <input class="form-control" value ="{{$d->phone}}" type="number" placeholder="Masukkan nomor telepon"
+                                            id="phone" name="phone" autocomplete="off"  required>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="user.location" class="form-control-label">Alamat</label>
+                                    <label for="user.location" class="form-control-label" >Alamat</label>
                                     <div>
                                         <input class="form-control" value ="{{$d->address}}" type="text" placeholder="Sialhkan masukkan alamat"
-                                            id="address" name="address" autocomplete="off">
+                                            id="address" required name="address" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -103,42 +101,27 @@
                                             <option selected value ="{{$d->gender}}">Pilih</option>
                                             <option value="pria">Pria</option>
                                             <option value="wanita">Wanita</option>
-
                                         </select>
-
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="tanggal"> Tanggal Lahir</label>
-                                    <div style="max-width: 200px">
-                                        <input type="date" value ="{{$d->birthdate}}" class="form-control" id="birthdate" name="birthdate">
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
                         </div>
-                        {{-- <div class="row">
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="user.phone" class="form-control-label">Jenis Kelamin</label>
+                                     <label for="specialty" class="form-control-label">Specialty</label>
                                     <div>
-                                        <label class="font-weight-bold">Photo</label>
-                                        <input type="file" class="form-control @error('image') is-invalid @enderror"
-                                            name="image">
+                                        <input class="form-control"  value ="{{$d->specialty}}" type="text" placeholder="Masukkan Specialty"
+                                            id="specialty" required name="specialty" autocomplete="off" style="max-width: 200px">
                                     </div>
                                 </div>
                             </div>
-
-                        </div> --}}
-
-
+                        </div>
+                        @endforeach
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Simpan</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

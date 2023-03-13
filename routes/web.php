@@ -11,6 +11,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
+use App\Models\Dentist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -70,14 +71,15 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('data-dokter', [DentistController::class, 'index']);
   Route::get('add-dokter', [DentistController::class, 'create']);
   Route::post('add-dokter', [DentistController::class, 'store']);
-
+  Route::get('edit-dokter/{id}', [DentistController::class, 'index_edit'])->name('editdokter');
+  Route::post('editdokter', [DentistController::class, 'update']);
   # Route Pasien
   Route::get('data-patient', [PatientController::class, 'index']);
   Route::get('add-patient', [PatientController::class, 'create']);
   Route::post('add-patient', [PatientController::class, 'store']);
   Route::delete('data-patient', [PatientController::class, 'destroy']);
   Route::get('edit-patient/{id}', [PatientController::class, 'index_edit'])->name('editpatient');
-  Route::post('edit-patient', [PatientController::class, 'update']);
+  Route::post('edit-patient/{id}', [PatientController::class, 'update']);
 
 
   Route::get('/logout', [SessionsController::class, 'destroy']);
