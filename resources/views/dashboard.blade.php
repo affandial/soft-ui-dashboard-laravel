@@ -63,7 +63,7 @@
                         <div class="col-4 text-end">
                             <div
                                 class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md justify-content-center d-flex">
-                                <img src="../assets/img/checks1.svg" class="navbar-brand-img  w-50" alt="...">
+                                <img src="../assets/img/check.svg" class="navbar-brand-img  w-50" alt="...">
                             </div>
                         </div>
                     </div>

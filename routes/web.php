@@ -29,8 +29,6 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/', [HomeController::class, 'home']);
   Route::get('dashboard', [DashboardController::class, 'index']);
 
-
-
   # Route Penanganan
   Route::get('treatment', [TreatmentController::class, 'index']);
   Route::get('add-treatment', [TreatmentController::class, 'create']);
@@ -70,8 +68,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'guest'], function () {
-  Route::get('/register', [RegisterController::class, 'create']);
-  Route::post('/register', [RegisterController::class, 'store']);
+  // Route::get('/register', [RegisterController::class, 'create']);
+  // Route::post('/register', [RegisterController::class, 'store']);
   Route::get('/login', [SessionsController::class, 'create']);
   Route::post('/session', [SessionsController::class, 'store']);
   Route::get('/login/forgot-password', [ResetController::class, 'create']);
