@@ -63,8 +63,8 @@
                                             <td class="ps-4">
                                                 <p class="text-xs font-weight-bold mb-0">{{ $treat->type }}</p>
                                             </td>
-                                            <td class="ps-4">
-                                                <p class="text-xs font-weight-bold mb-0">{{ $treat->description }}</p>
+                                            <td class="ps-4" >
+                                                <p style="white-space: break-spaces" class="text-xs font-weight-bold mb-0">{{ $treat->description }}</p>
                                             </td>
                                             <td class="ps-4">
                                                 <p class="text-xs font-weight-bold mb-0">
