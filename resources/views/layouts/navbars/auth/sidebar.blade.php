@@ -74,36 +74,30 @@
           </a>
         </li>
         <li class="nav-item pb-2">
-          <a class="nav-link {{ (Request::is('today') ? 'active' : '') }}" href="{{ url('today') }}">
+          <a class="nav-link @if ( Request::is('today') || Request::is('last') || Request::is('next')) {{'active'}} @else {{''}} @endif" href="{{ url('today') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('today') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
             </div>
-            <span class="nav-link-text ms-1">Pasien Hari Ini</span>
+            <span class="nav-link-text ms-1">Jadwal</span>
           </a>
         </li>
-        <li class="nav-item pb-2">
-          <a class="nav-link {{ (Request::is('last') ? 'active' : '') }}" href="{{ url('last') }}">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('last') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
-            </div>
-            <span class="nav-link-text ms-1">Pasien Kemarin</span>
-          </a>
-        </li>
-        <li class="nav-item pb-2">
-          <a class="nav-link {{ (Request::is('next') ? 'active' : '') }}" href="{{ url('next') }}">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('next') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
-            </div>
-            <span class="nav-link-text ms-1">Pasien Besok</span>
-          </a>
-        </li>
+        <!--<li class="nav-item pb-2">-->
+        <!--  <a class="nav-link {{ (Request::is('last') ? 'active' : '') }}" href="{{ url('last') }}">-->
+        <!--    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">-->
+        <!--      <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('last') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>-->
+        <!--    </div>-->
+        <!--    <span class="nav-link-text ms-1">Pasien Kemarin</span>-->
+        <!--  </a>-->
+        <!--</li>-->
+        <!--<li class="nav-item pb-2">-->
+        <!--  <a class="nav-link {{ (Request::is('next') ? 'active' : '') }}" href="{{ url('next') }}">-->
+        <!--    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">-->
+        <!--      <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('next') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>-->
+        <!--    </div>-->
+        <!--    <span class="nav-link-text ms-1">Pasien Besok</span>-->
+        <!--  </a>-->
+        <!--</li>-->
 
-
-
-        <li class="nav-link mb-0">
-          <a href="https://wa.me/6281212345678?text=Halo,%20saya%20ingin%20informasi%20terkait%20klinik%20gigi" class="btn btn-primary btn-md active px-5 text-white" target="_blank" role="button" aria-pressed="true">
-            UPGRADE </a>
-        </li>
       </ul>
     </div>
   </div>

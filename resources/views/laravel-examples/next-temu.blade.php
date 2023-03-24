@@ -4,7 +4,7 @@
     <div>
         <div class="alert alert-secondary mx-4" role="alert">
             <span class="text-white">
-                <center><strong>Daftar Pasien Kemarin</strong></center>
+                <center><strong>Daftar Pasien Besok</strong></center>
             </span>
         </div>
         <div class="row">
@@ -20,6 +20,11 @@
                 @endif
                 <div class="card mb-4 mx-4">
                     <div class="card-header pb-0">
+                        <div class="d-flex flex-row">
+                            <button onclick="window.location='{{ url("next") }}'" class='btn btn-primary'>besok</button> &nbsp;
+                            <button onclick="window.location='{{ url("today") }}'"  class='btn btn-outline-primary'>hari ini</button>&nbsp;
+                            <button onclick="window.location='{{ url("last") }}'"  class='btn btn-outline-primary'>kemarin</button>
+                        </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -27,7 +32,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Nomor
+                                            No
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -39,6 +44,10 @@
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Nomor Telepon
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Status
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -58,29 +67,15 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{ $treat->date }}</p>
                                             </td>
                                             </td>
+                                            <td class="ps-4"><p class="text-xs font-weight-bold mb-0">{{ $treat->name }}</td>
                                             <td class="ps-4">
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    @foreach ($patientId as $patient)
-                                                        @if ($patient->id == $treat->patient_id)
-                                                            {{ $patient->name }}
-                                                        @break
-                                                    @endif
-                                                @endforeach
-                                            </p>
+                                                    <button  class="icon-button btn gradient-btn" onclick="window.open('https://wa.me/{{ $treat->phone_no }}', '_blank')"
+                                                        style="background-image: linear-gradient(to bottom right, #c0b0b4, #ffffff);min-width:150px"
+                                                        title="Hubungi" >
+                                                         {{ $treat->phone_no }}</i>
+                                                    </button>
                                             </td>
-                                            <td class="ps-4">
-                                              <p class="text-xs font-weight-bold mb-0">
-                                                  @foreach ($patientId as $patient)
-                                                    @if ($patient->id == $treat->patient_id)
-                                                    <a href="https://wa.me/{{ $patient->phone_no }}" target="_blank">
-                                                      {{ $patient->phone_no }}
-                                                    </a>
-                                                      @break
-                                                    @endif
-                                                  @endforeach
-                                              </p>
-                                            </td>
-                                          <td> <p class="text-xs font-weight-bold mb-0">{{ $treat->status }}</p></td>
+                                          <td> <p class="text-center text-xs font-weight-bold mb-0">{{ $treat->status }}</p></td>
                                     </td>
                                     <td class="text-center">
                                         @if ($treat->status == 'pending')

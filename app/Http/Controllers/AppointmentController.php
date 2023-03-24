@@ -13,33 +13,39 @@ class AppointmentController extends Controller
 {
   public function index()
   {
-    $data = Appointment::where('date', '=', Appointment::raw('CURDATE()'))->orderBy('date', 'asc')->paginate(20);
-    $patientId = Patient::select(['id', 'name' ,'phone_no'])->get();
-    return view('laravel-examples/today', ['data' => $data, 'patientId' => $patientId]);
+    $data = Appointment::select('appointments.*', 'patients.name', 'patients.phone_no')
+      ->join('patients', 'appointments.patient_id', '=', 'patients.id')
+      ->where('date', '=', Appointment::raw('CURDATE()'))->orderBy('date', 'asc')->paginate(20);
+    return view('laravel-examples/today', ['data' => $data]);
   }
 
   public function last()
   {
     // Log::channel('stderr')->info("test");
-    $data = Appointment::where('date', '<', now())->orderBy('date', 'asc')->paginate(20);
-    $patientId = Patient::select(['id', 'name','phone_no'])->get();
 
-    return view('laravel-examples/last', ['data' => $data, 'patientId' => $patientId]);
+    $data = Appointment::select('appointments.*', 'patients.name', 'patients.phone_no')
+      ->join('patients', 'appointments.patient_id', '=', 'patients.id')
+      ->where('date', '<', now())
+      ->orderBy('date', 'asc')
+      ->paginate(20);
+    return view('laravel-examples/last', ['data' => $data]);
   }
 
   public function next()
   {
     Log::channel('stderr')->info("error");
-    $data = Appointment::where('date', '>', now())->orderBy('date', 'asc')->paginate(20);
-    $patientId = Patient::select(['id', 'name','phone_no'])->get();
-
-    return view('laravel-examples/next-temu', ['data' => $data, 'patientId' => $patientId]);
+    $data = Appointment::select('appointments.*', 'patients.name', 'patients.phone_no')
+      ->join('patients', 'appointments.patient_id', '=', 'patients.id')
+      ->where('date', '>', now())
+      ->orderBy('date', 'asc')
+      ->paginate(20);
+    return view('laravel-examples/next-temu', ['data' => $data]);
   }
   public function create()
   {
-    $patientId = Patient::select(['id', 'name','phone_no'])->get();
+    $patientId = Patient::select(['id', 'name', 'phone_no'])->get();
     $dentistId = Dentist::select(['id', 'name'])->get();
-    return view('laravel-examples/add-jadwal',['patientId'=> $patientId, 'dentistId'=> $dentistId]);
+    return view('laravel-examples/add-jadwal', ['patientId' => $patientId, 'dentistId' => $dentistId]);
   }
 
 
@@ -72,5 +78,4 @@ class AppointmentController extends Controller
     Appointment::create($data);
     return redirect()->back()->with(['success' => 'Jadwal berhasil di buat']);
   }
-
 }
