@@ -30,12 +30,13 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('dashboard/{status?}', [DashboardController::class, 'index']);
   Route::post('add', [DashboardController::class, 'update']);
 
-  # Route Penanganan
+  # Route Treatment / Penanganan
   Route::get('treatment', [TreatmentController::class, 'index']);
   Route::get('add-treatment', [TreatmentController::class, 'create']);
   Route::post('add-treatment', [TreatmentController::class, 'store']);
+  Route::post('cari-treatment', [TreatmentController::class, 'search']);
 
-  # Rout Jawal
+  # Route Jadwal
   Route::get('today', [AppointmentController::class, 'index']);
   Route::put('today', [AppointmentController::class, 'update']);
   Route::get('last', [AppointmentController::class, 'last']);
@@ -50,7 +51,9 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('add-dokter', [DentistController::class, 'create']);
   Route::post('add-dokter', [DentistController::class, 'store']);
   Route::get('edit-dokter/{id}', [DentistController::class, 'index_edit'])->name('editdokter');
+  Route::delete('data-dokter', [DentistController::class, 'destroy']);
   Route::post('edit-dokter', [DentistController::class, 'update']);
+  Route::post('cari-dokter', [DentistController::class, 'search']);
 
   # Route Pasien
   Route::get('data-patient', [PatientController::class, 'index']);

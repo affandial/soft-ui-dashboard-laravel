@@ -2,20 +2,31 @@
 
 @section('content')
     <div>
-        <div class="alert alert-secondary mx-4" role="alert">
-            <span class="text-white">
-                <center><strong>Daftar Penanganan Pasien</strong></center>
-            </span>
-        </div>
+
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4 mx-4">
                     <div class="card-header pb-0">
+                        <h3>Data Penanganan Pasien </h3>
+                    </div>
+                    <form action="cari-treatment" method="POST">
+                        @csrf
+                        <div class="input-group px-4">
+                            <button type="submit" class="btn btn-outline-primary" style="height: 50px">CARI</button>
+                            <span class="input-group-text text-body " style="height: 50px"><i class="fas fa-search"
+                                    aria-hidden="true"></i></span>
+                            <input style="height: 50px" type="text" name="name" class="form-control"
+                                placeholder="ketik disini.">
+                            <input style="height: 50px" type="date" name="birthdate" class="form-control"
+                                placeholder="ketik disini.">
+                        </div>
+                    </form>
+                    <div class="card-header pt-0 pb-0">
                         <div class="d-flex flex-row justify-content-between">
                             <div>
                             </div>
                             <a href="/add-treatment" class="btn bg-gradient-primary btn-sm mb-0" type="button">+&nbsp; TAMBAH
-                                PENANGANAN</a>
+                            </a>
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -24,24 +35,28 @@
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Nomor
+                                            No
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Nama
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            No Kwitansi
+                                            Subjective
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Type Penanganan
+                                            Objective
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Deksripsi Penanganan
+                                            Assessment
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Pasien ID
+                                            Plan
                                         </th>
+
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Dentist ID
+                                            Dokter
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -54,45 +69,32 @@
                                     <?php $a = ($data->currentPage() - 1) * 20 + 1; ?>
                                     @foreach ($data as $treat)
                                         <tr>
-                                            <td class="ps-4">
+                                            <td class="ps-4" style="text-align: left;  vertical-align: top;">
                                                 <p class="text-xs font-weight-bold mb-0">{{ $a }}</p>
                                             </td>
-                                            <td class="ps-4">
-                                                <p class="text-xs font-weight-bold mb-0">{{ $treat->no_kwitansi }}</p>
+                                            <td class="ps-4" style="text-align: left;  vertical-align: top;">
+                                                <p class="text-xs font-weight-bold mb-0">{{ $treat->name }}</p>
                                             </td>
-                                            <td class="ps-4">
-                                                <p class="text-xs font-weight-bold mb-0">{{ $treat->type }}</p>
+                                            <td class="ps-4" style="text-align: left;  vertical-align: top;">
+                                                <p style="white-space: break-spaces;max-width:30ch"
+                                                    class="text-xs font-weight-bold mb-0">{{ $treat->subjective }}</p>
                                             </td>
-                                            <td class="ps-4" >
-                                                <p style="white-space: break-spaces" class="text-xs font-weight-bold mb-0">{{ $treat->description }}</p>
+                                            <td class="ps-4" style="text-align: left;  vertical-align: top;">
+                                                <p style="white-space: break-spaces;max-width:30ch"
+                                                    class="text-xs font-weight-bold mb-0">{{ $treat->objective }}</p>
                                             </td>
-                                            <td class="ps-4">
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    @php
-                                                        foreach($patientId as $patient)
-                                                          {
-                                                            if ( $patient->id == $treat->patient_id){
-                                                              echo $patient->name;
-                                                              break;
-                                                            }
-                                                          }
-                                                    @endphp
-                                                </p>
+                                            <td class="ps-4" style="text-align: left;  vertical-align: top;">
+                                                <p style="white-space: break-spaces;max-width:30ch"
+                                                    class="text-xs font-weight-bold mb-0">{{ $treat->assessment }}</p>
                                             </td>
-                                            <td class="text-center">
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                  @php
-                                                  foreach($dentistId as $dentist)
-                                                    {
-                                                      if ( $dentist->id == $treat->dentist_id){
-                                                        echo $dentist->name;
-                                                        break;
-                                                      }
-                                                    }
-                                              @endphp
-                                                </p>
+                                            <td class="ps-4" style="text-align: left;  vertical-align: top;">
+                                                <p style="white-space: break-spaces;max-width:30ch"
+                                                    class="text-xs font-weight-bold mb-0">{{ $treat->plan }}</p>
                                             </td>
-                                            <td class="text-center">
+                                            <td class="ps-4" style="text-align: left;  vertical-align: top;">
+                                                <p class="text-xs font-weight-bold mb-0">{{ $treat->name_dentist }}</p>
+                                            </td>
+                                            <td class="text-center" style=" vertical-align: top;">
                                                 <p class="text-xs font-weight-bold mb-0">{{ $treat->date }}</p>
                                             </td>
                                         </tr>
@@ -101,12 +103,13 @@
                                 </tbody>
                             </table>
                         </div>
-                         <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center pt-2">
                                 <li class="page-item">
-                                    <a class="page-link" href="{{ $data->previousPageUrl() }}" >back</a>
+                                    <a class="page-link" href="{{ $data->previousPageUrl() }}">back</a>
                                 </li>
-                                <li class="page-item  disabled"><a class="page-link" href="#"> {{ $data->currentPage() }}</a></li>
+                                <li class="page-item  disabled"><a class="page-link" href="#">
+                                        {{ $data->currentPage() }}</a></li>
 
                                 <li class="page-item">
                                     <a class="page-link" href="{{ $data->nextPageUrl() }}">next</a>

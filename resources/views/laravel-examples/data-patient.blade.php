@@ -29,7 +29,7 @@
                             <input style="height: 50px" type="date" name="birthdate" class="form-control" placeholder="ketik disini.">
                         </div>
                     </form>
-                    <div class="card-header pt-2 pb-0">
+                    <div class="card-header pt-0 pb-0">
                         <div class="d-flex flex-row justify-content-between">
                             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 d-flex justify-content-end"
                                 id="navbar">
@@ -44,7 +44,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Nomor
+                                            No
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -52,7 +52,7 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Jenis Kelamin
+                                            Gender
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -60,6 +60,9 @@
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Email
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Allergy
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -90,6 +93,10 @@
                                             </td>
                                             <td class="">
                                                 <p class="text-xs font-weight-bold mb-0">{{ $treat->email }}</p>
+                                            </td>
+                                            <td class="ps-4" style="text-align: left;  vertical-align: top;">
+                                                <p style="white-space: break-spaces;max-width:30ch"
+                                                    class="text-xs font-weight-bold mb-0">{{ $treat->allergy }}</p>
                                             </td>
                                             <td class="text-center">
                                                 <span

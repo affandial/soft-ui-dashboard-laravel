@@ -46,7 +46,7 @@
   <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
 </head>
 
-<body style="background-color: 	#00FFFF !important;" class="g-sidenav-show {{ (\Request::is('rtl') ? 'rtl' : (Request::is('virtual-reality') ? 'virtual-reality' : '')) }} ">
+<body style="background-color: 	#f5f5f5" class="g-sidenav-show">
   @auth
   @yield('auth')
   @endauth

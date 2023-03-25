@@ -2,11 +2,6 @@
 
 @section('content')
     <div>
-        <div class="alert alert-secondary mx-4" role="alert">
-            <span class="text-white">
-                <center><strong>Jadwal Pasien Hari ini</strong></center>
-            </span>
-        </div>
         <div class="row">
             <div class="col-12">
                 @if (session('success'))
@@ -19,13 +14,16 @@
                     </div>
                 @endif
                 <div class="card mb-4 mx-4">
-                    <div class="card-header pb-0">
+                   <div class="card-header pb-0">
+                        <h3>Jadwal Hari Ini </h3>
+                    </div>
+                    <div class="card-header pb-0 pt-0">
                         <div class="d-flex flex-row">
-                            <button onclick="window.location='{{ url('next') }}'"
+                            <button style="max-width:110px" onclick="window.location='{{ url('next') }}'"
                                 class='btn btn-outline-primary'>besok</button> &nbsp;
-                            <button onclick="window.location='{{ url('today') }}'" class='btn btn-primary'>hari
+                            <button style="max-width:110px"  onclick="window.location='{{ url('today') }}'" class='btn btn-primary'>hari
                                 ini</button>&nbsp;
-                            <button onclick="window.location='{{ url('last') }}'"
+                            <button style="max-width:110px"  onclick="window.location='{{ url('last') }}'"
                                 class='btn btn-outline-primary'>kemarin</button>
                         </div>
                     </div>
@@ -35,7 +33,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Nomor
+                                            No
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">

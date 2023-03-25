@@ -18,7 +18,6 @@ class DentistController extends Controller
 
   public function index_edit($id)
   {
-    // Log::channel('stderr')->info($id);
     $data = Dentist::where('id', '=', $id)->get();
     return view('laravel-examples/edit-dokter ', ['data' => $data]);
   }
@@ -84,5 +83,33 @@ class DentistController extends Controller
 
     //redirect to index
     return  redirect()->back()->with('success', 'Data Dokter Berhasil ditambahkan');
+  }
+
+  public function search(Request $request)
+  {
+    if (is_null($request->name) && is_null($request->birthdate)) {
+      return redirect('data-dokter');
+    }
+    $query = Dentist::query();
+
+    if ($request->name && $request->birthdate) {
+      $query
+        ->where('name', 'like', "%$request->name%")
+        ->where('birthdate', $request->birthdate);
+    } elseif ($request->name) {
+      $query->where('name', 'like', "%$request->name%");
+    } elseif ($request->birthdate) {
+      $query->where('birthdate', $request->birthdate);
+    }
+
+    $data = $query->paginate(20);
+    return view('laravel-examples/data-dokter', ['data' => $data]);
+  }
+
+  public function destroy(Request $request)
+  {
+    $dentist = Dentist::findOrFail($request->id);
+    $dentist->delete();
+    return redirect('data-dokter')->with('success', 'Data Pasien Berhasil dihapus');
   }
 }

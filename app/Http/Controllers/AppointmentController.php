@@ -52,7 +52,7 @@ class AppointmentController extends Controller
   public function update(Request $request)
   {
     $data = Appointment::findOrFail($request->id);
-    Log::channel('stderr')->info($data);
+
     try {
       $data->update([
         'status'      => $request->status

@@ -12,23 +12,25 @@ class TreatmentController extends Controller
 {
   public function index()
   {
-    $data = Treatment::latest()->paginate(20);
-    $patientId = Patient::select(['id', 'name'])->get();
-    $dentistId = Dentist::select(['id', 'name'])->get();
+    $data = Treatment
+      ::select('treatments.*', 'patients.name', 'patients.birthdate', 'patients.phone_no', 'dentists.name AS name_dentist')
+      ->join('patients', 'treatments.patient_id', '=', 'patients.id')
+      ->join('dentists', 'treatments.dentist_id', '=', 'dentists.id')
+      ->orderBy('date', 'desc')->paginate(20);
+
     // Log::channel('stderr')->info(json_decode(($patientId)));
 
-    return view('laravel-examples/treatment', ['data' => $data, 'patientId' => $patientId, 'dentistId' => $dentistId]);
+    return view('laravel-examples/treatment', ['data' => $data]);
   }
 
   public function create()
   {
-    $patientId = Patient::select(['id', 'name','phone_no'])
+    $patientId = Patient::select(['id', 'name', 'phone_no'])
       ->orderBy('name', 'asc')
       ->get();
     $dentistId = Dentist::select(['id', 'name'])
       ->orderBy('name', 'asc')
       ->get();
-    Log::channel('stderr')->info(count($patientId));
 
     return view('laravel-examples/add-treatment', ['patientId' => $patientId, 'dentistId' => $dentistId]);
   }
@@ -37,13 +39,13 @@ class TreatmentController extends Controller
   {
     Log::channel('stderr')->info("Masek ke postentId");
     $data = request()->validate([
-      'no_kwitansi'   => ['required'],
       'date'          => ['required', 'date'],
-      'price'         => ['required', 'numeric'],
       'patient_id'    => ['required', 'numeric'],
       'dentist_id'    => ['required', 'numeric'],
-      'type'          => ['required'],
-      'description'   => ['required'],
+      'subjective'    => ['required'],
+      'objective'     => ['required'],
+      'assessment'    => ['required'],
+      'plan'          => ['required'],
     ]);
 
     try {
@@ -58,5 +60,43 @@ class TreatmentController extends Controller
 
     //redirect to
     return redirect()->back()->with('success', 'Daftar Penanganan Pasien Berhasil ditambahkan');
+  }
+
+
+  public function search(Request $request)
+  {
+    $names = $request->name;
+    if (is_null($request->name) && is_null($request->birthdate)) {
+      Log::channel('stderr')->info("Lewat doang");
+      return redirect('treatment');
+    }
+    if ($request->name && $request->birthdate) {
+      $data = Treatment::select('treatments.*', 'patients.name', 'patients.birthdate', 'patients.phone_no', 'dentists.name AS name_dentist')
+        ->leftjoin('dentists', 'treatments.dentist_id', '=', 'dentists.id')
+        ->leftJoin('patients', 'treatments.patient_id', '=', 'patients.id')
+        ->whereIn('patients.id', function ($query) use ($request) {
+          $query->select('id')
+            ->from('patients')
+            ->where('name', 'LIKE', "%{$request->name}%");
+        })
+        ->where('treatments.date', $request->birthdate)
+        ->paginate(20);
+    } elseif ($request->name) {
+      $query = Treatment::select('treatments.*', 'patients.name', 'patients.birthdate', 'patients.phone_no', 'dentists.name AS name_dentist')
+        ->leftJoin('dentists', 'treatments.dentist_id', '=', 'dentists.id')
+        ->leftJoin('patients', 'treatments.patient_id', '=', 'patients.id')
+        ->whereIn('treatments.patient_id', function ($query) use ($request) {
+          $query->select('id')
+            ->from('patients')
+            ->where('name', 'LIKE', "%{$request->name}%");
+        })->paginate(20);
+    } elseif ($request->birthdate) {
+      $query = Treatment::select('treatments.*', 'patients.name', 'patients.birthdate', 'patients.phone_no', 'dentists.name AS name_dentist')
+        ->leftjoin('dentists', 'treatments.dentist_id', '=', 'dentists.id')
+        ->leftJoin('patients', 'treatments.patient_id', '=', 'patients.id')
+        ->where('treatments.date', $request->birthdate)
+        ->paginate(20);
+    }
+    return view('laravel-examples/treatment', ['data' => $query]);
   }
 }

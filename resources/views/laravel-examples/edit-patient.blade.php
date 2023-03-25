@@ -9,7 +9,6 @@
             </div>
             <div class="card card-body blur shadow-blur mx-4 mt-n6">
                 <div class="row gx-4">
-
                     <div class="col-auto my-auto">
                         <div class="h-100">
                             <h5 class="mb-1">
@@ -26,7 +25,6 @@
         </div>
         <div class="container-fluid py-4">
             <div class="card">
-
                 <div class="card-body pt-4 p-3">
                     <form action="/edit-patient" method="POST" role="form text-left">
                         @csrf
@@ -49,98 +47,93 @@
                                 </button>
                             </div>
                         @endif
-                        @foreach  ($data as $d)
-                        <div class="row">
-                            <input type="hidden" value="{{$d->id}}" name="id" id="id">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name" class="form-control-label">Nama</label>
-                                    <div>
-                                        <input class="form-control" value ="{{$d->name}}" type="text" placeholder="Silahkan input nama"
-                                            id="name" name="name" autocomplete="off" required>
+                        @foreach ($data as $d)
+                            <div class="row">
+                                <input type="hidden" value="{{ $d->id }}" name="id" id="id">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name" class="form-control-label">Nama</label>
+                                        <div>
+                                            <input class="form-control" value="{{ $d->name }}" type="text"
+                                                placeholder="Silahkan input nama" id="name" name="name"
+                                                autocomplete="off" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="email" class="form-control-label">Email</label>
+                                        <div>
+                                            <input class="form-control" value="{{ $d->email }}" type="email"
+                                                placeholder="Silahkan masukkan email " id="email" name="email"
+                                                autocomplete="off">
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="email" class="form-control-label">Email</label>
-                                    <div>
-                                        <input class="form-control" value ="{{$d->email}}" type="email" placeholder="Silahkan masukkan email "
-                                            id="email" name="email" autocomplete="off" >
-
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phone_no" class="form-control-label">Nomor Telepon</label>
+                                        <div>
+                                            <input class="form-control" value="{{ $d->phone_no }}" type="number"
+                                                placeholder="Masukkan nomor telepon" id="phone_no" name="phone_no"
+                                                autocomplete="off" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="user.location" class="form-control-label">Alamat</label>
+                                        <div>
+                                            <input class="form-control" value="{{ $d->address }}" type="text"
+                                                placeholder="Sialhkan masukkan alamat" id="address" name="address"
+                                                autocomplete="off">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="user.phone" class="form-control-label">Jenis Kelamin</label>
+                                        <div style="max-width: 200px">
+                                            <select name="gender" id="gender" class="form-select"
+                                                aria-label="Disabled select example" required>
+                                                <option selected value="{{ $d->gender }}">Pilih</option>
+                                                <option value="pria">Pria</option>
+                                                <option value="wanita">Wanita</option>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="phone_no" class="form-control-label" >Nomor Telepon</label>
-                                    <div>
-                                        <input class="form-control" value ="{{$d->phone_no}}" type="number" placeholder="Masukkan nomor telepon"
-                                            id="phone_no" name="phone_no" autocomplete="off"  required>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user.location" class="form-control-label">Alamat</label>
-                                    <div>
-                                        <input class="form-control" value ="{{$d->address}}" type="text" placeholder="Sialhkan masukkan alamat"
-                                            id="address" name="address" autocomplete="off">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="tanggal"> Tanggal Lahir</label>
+                                        <div style="max-width: 200px">
+                                            <input type="date" value="{{ $d->birthdate }}" class="form-control"
+                                                id="birthdate" name="birthdate">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user.phone" class="form-control-label">Jenis Kelamin</label>
-                                    <div style="max-width: 200px">
-                                        <select name="gender" id="gender" class="form-select"
-                                            aria-label="Disabled select example" required>
-                                            <option selected value ="{{$d->gender}}">Pilih</option>
-                                            <option value="pria">Pria</option>
-                                            <option value="wanita">Wanita</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="tanggal"> Tanggal Lahir</label>
-                                    <div style="max-width: 200px">
-                                        <input type="date" value ="{{$d->birthdate}}" class="form-control" id="birthdate" name="birthdate">
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                        {{-- <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user.phone" class="form-control-label">Jenis Kelamin</label>
-                                    <div>
-                                        <label class="font-weight-bold">Photo</label>
-                                        <input type="file" class="form-control @error('image') is-invalid @enderror"
-                                            name="image">
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div> --}}
-
-
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Simpan</button>
-                        </div>
-                    </form>
-
+                        @endforeach
                 </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="user.phone" class="form-control-label">Allergy</label>
+                        <div class="@error('user.about')border border-danger rounded-3 @enderror">
+                            <textarea class="form-control" required id="description" name="allergy" rows="3" name="description">{{ $d->allergy }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Simpan</button>
+                </div>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 @endsection

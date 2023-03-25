@@ -64,7 +64,7 @@
                                     <label for="email" class="form-control-label">Email</label>
                                     <div>
                                         <input class="form-control" type="email" placeholder="Silahkan masukkan email "
-                                            id="email" name="email" autocomplete="off" >
+                                            id="email" name="email" autocomplete="off">
 
                                     </div>
                                 </div>
@@ -73,10 +73,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="phone_no" class="form-control-label" >Nomor Telepon</label>
+                                    <label for="phone_no" class="form-control-label">Nomor Telepon</label>
                                     <div>
                                         <input class="form-control" type="number" placeholder="Masukkan nomor telepon"
-                                            id="phone_no" name="phone_no" autocomplete="off"  required>
+                                            id="phone_no" name="phone_no" autocomplete="off" required>
                                     </div>
                                 </div>
                             </div>
@@ -115,21 +115,15 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="row">
-                            <div class="col-md-6">
+                        <div class="row">
                                 <div class="form-group">
-                                    <label for="user.phone" class="form-control-label">Jenis Kelamin</label>
-                                    <div>
-                                        <label class="font-weight-bold">Photo</label>
-                                        <input type="file" class="form-control @error('image') is-invalid @enderror"
-                                            name="image">
+                                    <label for="user.phone" class="form-control-label">Allergy</label>
+                                    <div class="@error('user.about')border border-danger rounded-3 @enderror">
+                                        <textarea class="form-control" required id="description" name="allergy" rows="3"
+                                            placeholder="Allergy yang diimiliki pasien" name="description"></textarea>
                                     </div>
                                 </div>
-                            </div>
-
-                        </div> --}}
-
-
+                        </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Simpan</button>
                         </div>

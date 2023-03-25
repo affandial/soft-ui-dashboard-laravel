@@ -24,7 +24,6 @@ class PatientController extends Controller
 
   public function update(Request $request)
   {
-    Log::channel('stderr')->info("GAGAL" . $request);
     $record = Patient::findOrFail($request->id);
 
     $check = request()->validate([
@@ -42,6 +41,7 @@ class PatientController extends Controller
         'gender'    => $request['gender'],
         'address'   => $request['address'],
         'birthdate' => $request['birthdate'],
+        'allergy'   => $request['allergy']
       ]);
     } catch (QueryException $e) {
       if ($e->errorInfo[1] == 1062) { // error code for duplicate entry
@@ -88,6 +88,7 @@ class PatientController extends Controller
 
   public function  store(Request $request)
   {
+
     $data = request()->validate([
       'name'      => ['required', 'min:4'],
       'phone_no'  => ['required', 'max:15'],
@@ -103,6 +104,7 @@ class PatientController extends Controller
         'gender'    => $request['gender'],
         'address'   => $request['address'],
         'birthdate' => $request['birthdate'],
+        'allergy'   => $request['allergy']
       ]);
     } catch (QueryException $e) {
       if ($e->errorInfo[1] == 1062) { // error code for duplicate entry
