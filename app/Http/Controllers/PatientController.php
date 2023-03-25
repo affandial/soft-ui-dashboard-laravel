@@ -18,13 +18,13 @@ class PatientController extends Controller
   public function index_edit($id)
   {
     // Log::channel('stderr')->info($id);
-    $data = Patient::where('id','=',$id)->get();
-    return view('laravel-examples/edit-patient', ['data'=>$data]);
+    $data = Patient::where('id', '=', $id)->get();
+    return view('laravel-examples/edit-patient', ['data' => $data]);
   }
 
   public function update(Request $request)
   {
-    Log::channel('stderr')->info("GAGAL".$request);
+    Log::channel('stderr')->info("GAGAL" . $request);
     $record = Patient::findOrFail($request->id);
 
     $check = request()->validate([
@@ -56,12 +56,34 @@ class PatientController extends Controller
     return redirect('data-patient')->with([
       'data' => $data,
       'success' => 'Data Pasien Berhasil diubah'
-    ] );
+    ]);
   }
 
   public function create()
   {
     return view('laravel-examples/add-patient');
+  }
+
+  public function search(Request $request)
+  {
+    Log::channel('stderr')->info("\n\n\Pencarian Data\n\n");
+    if (is_null($request->name) && is_null($request->birthdate)) {
+      return redirect('data-patient');
+    }
+    $query = Patient::query();
+
+    if ($request->name && $request->birthdate) {
+      $query
+        ->where('name', 'like', "%$request->name%")
+        ->where('birthdate', $request->birthdate);
+    } elseif ($request->name) {
+      $query->where('name', 'like', "%$request->name%");
+    } elseif ($request->birthdate) {
+      $query->where('birthdate', $request->birthdate);
+    }
+
+    $data = $query->paginate(20);
+    return view('laravel-examples/data-patient', ['data' => $data]);
   }
 
   public function  store(Request $request)

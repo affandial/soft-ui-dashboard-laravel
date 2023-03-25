@@ -27,7 +27,8 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth'], function () {
 
   Route::get('/', [HomeController::class, 'home']);
-  Route::get('dashboard', [DashboardController::class, 'index']);
+  Route::get('dashboard/{status?}', [DashboardController::class, 'index']);
+  Route::post('add', [DashboardController::class, 'update']);
 
   # Route Penanganan
   Route::get('treatment', [TreatmentController::class, 'index']);
@@ -55,6 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('data-patient', [PatientController::class, 'index']);
   Route::get('add-patient', [PatientController::class, 'create']);
   Route::post('add-patient', [PatientController::class, 'store']);
+  Route::post('cari-patient', [PatientController::class, 'search']);
   Route::delete('data-patient', [PatientController::class, 'destroy']);
   Route::get('edit-patient/{id}', [PatientController::class, 'index_edit'])->name('editpatient');
   Route::post('edit-patient', [PatientController::class, 'update']);

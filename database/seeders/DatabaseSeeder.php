@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             DataPatient::class,
             DataDentist::class,
             DataAppoinment::class,
-            DataTreatment::class
+            DataTreatment::class,
+            StatusKlinik::class
         ]);
     }
 }

@@ -18,7 +18,7 @@ class DataAppoinment extends Seeder
       'id' => 1,
       'patient_id' => 1,
       'status' => 'pending',
-      'date' => '2023-03-12',
+      'date' => date("Y-m-d", strtotime("-3 day")),
       'created_at' => now(),
       'updated_at' => now()
     ]);
@@ -27,7 +27,7 @@ class DataAppoinment extends Seeder
       'id' => 2,
       'patient_id' => 3,
       'status' => 'pending',
-      'date' => '2023-03-11',
+      'date' => date("Y-m-d", strtotime("-2 day")),
       'created_at' => now(),
       'updated_at' => now()
     ]);
@@ -36,7 +36,7 @@ class DataAppoinment extends Seeder
       'id' => 3,
       'patient_id' => 1,
       'status' => 'cancel',
-      'date' => '2023-03-11',
+      'date' => date("Y-m-d", strtotime("-1 day")),
       'created_at' => now(),
       'updated_at' => now()
     ]);
@@ -44,8 +44,8 @@ class DataAppoinment extends Seeder
     DB::table('appointments')->insert([
       'id' => 4,
       'patient_id' => 1,
-      'status' => 'confirm',
-      'date' => '2023-03-09',
+      'status' => 'pending',
+      'date' => date("Y-m-d"),
       'created_at' => now(),
       'updated_at' => now()
     ]);
@@ -54,7 +54,7 @@ class DataAppoinment extends Seeder
       'id' => 5,
       'patient_id' => 1,
       'status' => 'pending',
-      'date' => '2023-03-13',
+      'date' => date("Y-m-d"),
       'created_at' => now(),
       'updated_at' => now()
     ]);
@@ -63,7 +63,7 @@ class DataAppoinment extends Seeder
       'id' => 6,
       'patient_id' => 2,
       'status' => 'confirm',
-      'date' => '2023-03-13',
+      'date' => date("Y-m-d", strtotime("+1 day")),
       'created_at' => now(),
       'updated_at' => now()
     ]);
@@ -72,7 +72,7 @@ class DataAppoinment extends Seeder
       'id' => 7,
       'patient_id' => 3,
       'status' => 'cancel',
-      'date' => '2023-03-13',
+      'date' => date("Y-m-d", strtotime("+2 day")),
       'created_at' => now(),
       'updated_at' => now()
     ]);
@@ -81,7 +81,7 @@ class DataAppoinment extends Seeder
       'id' => 8,
       'patient_id' => 5,
       'status' => 'pending',
-      'date' => '2023-03-14',
+      'date' => date("Y-m-d", strtotime("+5 day")),
       'created_at' => now(),
       'updated_at' => now()
     ]);
@@ -89,7 +89,7 @@ class DataAppoinment extends Seeder
       'id' => 9,
       'patient_id' => 3,
       'status' => 'pending',
-      'date' => '2023-03-15',
+      'date' => date("Y-m-d", strtotime("+10 day")),
       'created_at' => now(),
       'updated_at' => now()
     ]);

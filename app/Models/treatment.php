@@ -9,13 +9,15 @@ class Treatment extends Model
 {
   use HasFactory;
   protected $fillable = [
-    'no_kwitansi',
-    'description',
+    // 'no_kwitansi',
+    // 'price',
     'date',
-    'price',
     'patient_id',
     'dentist_id',
-    'type'
+    'subjective',
+    'objective',
+    'assessment',
+    'plan',
   ];
 
 
