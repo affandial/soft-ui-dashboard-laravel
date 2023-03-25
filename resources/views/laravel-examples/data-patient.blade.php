@@ -3,7 +3,7 @@
 @section('content')
     <div>
 
-        <div class="row">
+        <div class="row" style="overflow-x: hidden;">
             @csrf
             <div class="col-12">
                 @if (session('success'))
