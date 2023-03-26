@@ -29,36 +29,35 @@
     @endif
     <?php
     if ($statusklinik->status == 'open') {
-      $buka = '';
-      $tutup = '-active';
-      $kb = 'disabled';
-      $kt = '';
-      $bb = 'bg-gradient-success';
-      $bt = 'bg-gradient-secondary';
-
+        $buka = '';
+        $tutup = '-active';
+        $kb = 'disabled';
+        $kt = '';
+        $bb = 'bg-gradient-success';
+        $bt = 'bg-gradient-secondary';
     } else {
-      $buka = '-active';
-      $tutup = '';
-      $kb ='';
-      $kt='disabled';
-      $bt = 'bg-gradient-success';
-      $bb = 'bg-gradient-secondary';
+        $buka = '-active';
+        $tutup = '';
+        $kb = '';
+        $kt = 'disabled';
+        $bt = 'bg-gradient-success';
+        $bb = 'bg-gradient-secondary';
     } ?>
-    <div class=" mt-4 d-flex justify-content-end" style="margin-right: 30px">
-        <div class="d-flex flex-row">
-          <form action="add" method="POST">
-            @csrf
-            <input type="hidden" value="open" name="status">
-            <button type="submit" class='btn btn{{$buka}}-primary {{$bb}}'    {{$kb}} >BUKA</button> &nbsp; &nbsp;
-          </form><form action="add" method="POST">
-            @csrf
-            <input type="hidden" value="closed" name="status">
-            <button type="submit" class='btn btn{{$tutup}}-primary {{$bt}}'  {{$kt}}>TUTUP</button>
+    <div class="row">
+        <div class="d-flex flex-row justify-content-end pt-0">
+            <form action="add" method="POST">
+                @csrf
+                <input type="hidden" value="open" name="status">
+                <button type="submit" class='btn btn{{ $buka }}-primary {{ $bb }}'
+                    {{ $kb }}>BUKA</button> &nbsp; &nbsp;
+            </form>
+            <form action="add" method="POST">
+                @csrf
+                <input type="hidden" value="closed" name="status">
+                <button type="submit" class='btn btn{{ $tutup }}-primary {{ $bt }}'
+                    {{ $kt }}>TUTUP</button>
             </form>
         </div>
-    </div>
-
-    <div class="row">
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
                 <div class="card-body p-3">

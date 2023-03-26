@@ -20,13 +20,14 @@
                         <h3>Data Pasien </h3>
                     </div>
                     <form action="cari-patient" method="POST">
-                      @csrf
+                        @csrf
                         <div class="input-group px-4">
-                            <button type="submit" class="btn btn-outline-primary" style="height: 50px">CARI</button>
+                            <input style="height: 50px" type="text" name="name" class="form-control"
+                                placeholder="ketik disini.">
+                            <input style="height: 50px" type="date" name="birthdate" class="form-control">
                             <span class="input-group-text text-body " style="height: 50px"><i class="fas fa-search"
                                     aria-hidden="true"></i></span>
-                            <input style="height: 50px" type="text" name="name" class="form-control" placeholder="ketik disini.">
-                            <input style="height: 50px" type="date" name="birthdate" class="form-control" placeholder="ketik disini.">
+                            <button type="submit" class="btn btn-outline-primary" style="height: 50px">CARI</button>
                         </div>
                     </form>
                     <div class="card-header pt-0 pb-0">

@@ -12,13 +12,12 @@
                     <form action="cari-dokter" method="POST">
                         @csrf
                         <div class="input-group px-4">
-                            <button type="submit" class="btn btn-outline-primary" style="height: 50px">CARI</button>
-                            <span class="input-group-text text-body " style="height: 50px"><i class="fas fa-search"
-                                    aria-hidden="true"></i></span>
                             <input style="height: 50px" type="text" name="name" class="form-control"
                                 placeholder="ketik disini.">
-                            <input style="height: 50px" type="date" name="birthdate" class="form-control"
-                                placeholder="ketik disini.">
+                            <input style="height: 50px" type="date" name="birthdate" class="form-control">
+                            <span class="input-group-text text-body " style="height: 50px"><i class="fas fa-search"
+                                    aria-hidden="true"></i></span>
+                            <button type="submit" class="btn btn-outline-primary" style="height: 50px">CARI</button>
                         </div>
                     </form>
                     <div class="card-header pt-0 pb-0">
@@ -83,7 +82,8 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{ $treat->email }}</p>
                                             </td>
                                             <td class="text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">{{$treat->specialty}}</span>
+                                                <span
+                                                    class="text-secondary text-xs font-weight-bold">{{ $treat->specialty }}</span>
                                             </td>
                                             <td class="text-center">
                                                 <form

@@ -88,7 +88,6 @@ class PatientController extends Controller
 
   public function  store(Request $request)
   {
-
     $data = request()->validate([
       'name'      => ['required', 'min:4'],
       'phone_no'  => ['required', 'max:15'],

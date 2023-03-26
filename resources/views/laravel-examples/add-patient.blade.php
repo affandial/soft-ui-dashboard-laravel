@@ -119,7 +119,7 @@
                                 <div class="form-group">
                                     <label for="user.phone" class="form-control-label">Allergy</label>
                                     <div class="@error('user.about')border border-danger rounded-3 @enderror">
-                                        <textarea class="form-control" required id="description" name="allergy" rows="3"
+                                        <textarea class="form-control" id="description" name="allergy" rows="3"
                                             placeholder="Allergy yang diimiliki pasien" name="description"></textarea>
                                     </div>
                                 </div>
