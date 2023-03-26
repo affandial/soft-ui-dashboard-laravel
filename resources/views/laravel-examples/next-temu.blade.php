@@ -18,13 +18,14 @@
                         <h3>Jadwal Besok </h3>
                     </div>
                     <div class="card-header pb-0 pt-0">
-                        <div class="d-flex flex-row">
-                            <button onclick="window.location='{{ url('next') }}'" class='btn btn-primary'>besok</button>
-                            &nbsp;
-                            <button onclick="window.location='{{ url('today') }}'" class='btn btn-outline-primary'>hari
-                                ini</button>&nbsp;
-                            <button onclick="window.location='{{ url('last') }}'"
-                                class='btn btn-outline-primary'>kemarin</button>
+                        <div class="d-flex flex-row ">
+                            <a href="{{ url('next') }}">
+                                <span class="badge badge-sm bg-gradient-light btn-outline-secondary">Besok</span></a>&nbsp;
+                            <span class="badge badge-sm bg-gradient-secondary">Hari Ini</span>&nbsp;
+                            <a href="{{ url('last') }}">
+                                <span
+                                    class="badge badge-sm bg-gradient-light btn-outline-secondary">Kemarin</span></a>&nbsp;
+                            </a>
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -72,12 +73,13 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{ $treat->name }}
                                             </td>
                                             <td class="ps-4">
-                                                <button class="icon-button btn gradient-btn"
-                                                    onclick="window.open('https://wa.me/{{ $treat->phone_no }}', '_blank')"
-                                                    style="background-image: linear-gradient(to bottom right, #c0b0b4, #ffffff);min-width:150px"
-                                                    title="Hubungi">
-                                                    {{ $treat->phone_no }}</i>
-                                                </button>
+                                                <p class="text-xs font-weight-bold mb-0">
+                                                    <span>{{ $treat->phone_no }}</span> &nbsp;&nbsp;
+                                                    <a href="https://wa.me/{{ $treat->phone_no }}" target="_blank">
+                                                        <img src="../assets/img/wa.svg" class="navbar-brand-img"
+                                                            style="max-height:20px" alt="...">
+                                                    </a>
+                                                </p>
                                             </td>
                                             <td>
                                                 <p class="text-center text-xs font-weight-bold mb-0">{{ $treat->status }}
@@ -93,12 +95,12 @@
                                                         <input type="hidden" value="cancel" name="status" id="status">
                                                         @csrf
                                                         @method('PUT')
-                                                        <button type="submit" class="icon-button btn gradient-btn"
-                                                            style="background-image: linear-gradient(to bottom right, #ac949a, #ffffff)"
-                                                            title="Batalkan Jadwal">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
+                                                        <button type="submit"
+                                                            style="padding: 0;border: none;background: none;">
+                                                            <img src='../assets/img/gagal.svg' height="20px"></button>
                                                     </form>
+                                                @else
+                                                    -
                                                 @endif
                                             </td>
                                         </tr>
@@ -108,21 +110,12 @@
                             </table>
                         </div>
                         <hr>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $data->previousPageUrl() }}">back</a>
-                                </li>
-                                <li class="page-item  disabled"><a class="page-link" href="#">
-                                        {{ $data->currentPage() }}</a></li>
-
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $data->nextPageUrl() }}">next</a>
-                                </li>
-                            </ul>
-                        </nav>
-
-                        <hr>
+                        <div class="paginationts">
+                            <a href="{{ $data->previousPageUrl() }}"
+                                class="prev @if ($data->currentPage() === 1) {{ 'disabled' }} @endif">Previous</a>
+                            <a href="#" class="disabled active">{{ $data->currentPage() }}</a>
+                            <a href="{{ $data->nextPageUrl() }}" class="next">Next</a>
+                        </div>
                         <p class="text-xs font-weight-bold m-2">Jumlah Pendaftaran Pasien : {{ $data->total() }}</p>
                         <p class="text-xs font-weight-bold m-2">Data Per Halaman : {{ $data->perPage() }} </p>
 

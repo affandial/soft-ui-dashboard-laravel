@@ -18,13 +18,14 @@
                         <h3>Jadwal Hari Ini </h3>
                     </div>
                     <div class="card-header pb-0 pt-0">
-                        <div class="d-flex flex-row">
-                            <button style="max-width:110px" onclick="window.location='{{ url('next') }}'"
-                                class='btn btn-outline-primary'>besok</button> &nbsp;
-                            <button style="max-width:110px"  onclick="window.location='{{ url('today') }}'" class='btn btn-primary'>hari
-                                ini</button>&nbsp;
-                            <button style="max-width:110px"  onclick="window.location='{{ url('last') }}'"
-                                class='btn btn-outline-primary'>kemarin</button>
+                        <div class="d-flex flex-row ">
+                            <a href="{{ url('next') }}">
+                                <span class="badge badge-sm bg-gradient-light btn-outline-secondary">Besok</span></a>&nbsp;
+                            <span class="badge badge-sm bg-gradient-secondary">Hari Ini</span>&nbsp;
+                            <a href="{{ url('last') }}">
+                                <span
+                                    class="badge badge-sm bg-gradient-light btn-outline-secondary">Kemarin</span></a>&nbsp;
+                            </a>
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -43,11 +44,11 @@
                                             Nama Pasien
                                         </th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Nomor Telepon
                                         </th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Status
                                         </th>
                                         <th
@@ -64,23 +65,22 @@
                                             <td class="ps-4">
                                                 <p class="text-xs font-weight-bold mb-0">{{ $a }}</p>
                                             </td>
-                                            <td class="ps-4">
+                                            <td class="ps-2">
                                                 <p class="text-xs font-weight-bold mb-0">{{ $treat->date }}</p>
                                             </td>
                                             <td class="ps-4">
                                                 <p class="text-xs font-weight-bold mb-0">{{ $treat->name }}</p>
                                             </td>
-                                            <td class="ps-4 text-center">
+                                             <td class="ps-4">
                                                 <p class="text-xs font-weight-bold mb-0">
-                                                    <button class="icon-button btn gradient-btn"
-                                                        onclick="window.open('https://wa.me/{{ $treat->phone_no }}', '_blank')"
-                                                        style="background-image: linear-gradient(to bottom right, #c0b0b4, #ffffff);min-width:150px"
-                                                        title="Hubungi">
-                                                        {{ $treat->phone_no }}</i>
-                                                    </button>
+                                                    <span>{{ $treat->phone_no }}</span> &nbsp;&nbsp;
+                                                    <a href="https://wa.me/{{ $treat->phone_no }}" target="_blank">
+                                                        <img src="../assets/img/wa.svg" class="navbar-brand-img"
+                                                            style="max-height:20px" alt="...">
+                                                    </a>
                                                 </p>
                                             </td>
-                                            <td class="text-center">
+                                            <td class="ps-4">
                                                 <p class="text-xs font-weight-bold mb-0">{{ $treat->status }}</p>
                                             </td>
                                             <td class="d-flex flex-row justify-content-center">
@@ -96,13 +96,10 @@
                                                                 id="status">
                                                             @csrf
                                                             @method('PUT')
-                                                            <button type="submit" class="icon-button btn gradient-btn"
-                                                                style="background-image: linear-gradient(to bottom right, #ac949a, #ffffff)"
-                                                                title="Batalkan Jadwal">
-                                                                <i class="fa fa-times"></i>
-                                                            </button>
+                                                            <button type="submit" style="padding: 0;border: none;background: none;" title="Batalkan Jadwal">
+                                                            <img src='../assets/img/gagal.svg' height="20px"></button>
                                                         </form>
-                                                    </div> &nbsp;
+                                                    </div> &nbsp;&nbsp;&nbsp;&nbsp;
                                                     <div>
                                                         <form
                                                             onsubmit="return confirm('Apa anda ingin menyetujui jadwal ini ?');"
@@ -113,16 +110,13 @@
                                                                 id="status">
                                                             @csrf
                                                             @method('PUT')
-                                                            <button type="submit" class="icon-button btn gradient-btn"
-                                                                style="background-image: linear-gradient(to bottom right, #ac949a, #ffffff)"
-                                                                title="Setujui Jadwal">
-                                                                <i class="fa fa-check"></i>
+                                                            <button type="submit" style="padding: 0;border: none;background: none;" title="Setujui Jadwal">
+                                                            <img src='../assets/img/setuju.svg' height="20px"></button>
                                                             </button>
                                                         </form>
                                                     </div>
                                                 @else
-                                                    <button type="button" class="icon-button btn disabled"> NO ACTION
-                                                    </button>
+                                                    -
                                                 @endif
                                             </td>
                                         </tr>
@@ -132,20 +126,11 @@
                             </table>
                         </div>
                         <hr>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $data->previousPageUrl() }}">back</a>
-                                </li>
-                                <li class="page-item  disabled"><a class="page-link" href="#">
-                                        {{ $data->currentPage() }}</a></li>
-
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $data->nextPageUrl() }}">next</a>
-                                </li>
-                            </ul>
-                        </nav>
-
+                        <div class="paginationts">
+                            <a href="{{ $data->previousPageUrl() }}" class="prev @if ($data->currentPage() === 1) {{'disabled'}} @endif">Previous</a>
+                            <a href="#" class="disabled active">{{ $data->currentPage() }}</a>
+                            <a href="{{ $data->nextPageUrl() }}" class="next @if($data->currentPage()== $data->lastPage()) {{"disabled"}} @endif">Next</a>
+                        </div>
                         <hr>
                         <p class="text-xs font-weight-bold m-2">Jumlah Pendaftaran Pasien : {{ $data->total() }}</p>
                         <p class="text-xs font-weight-bold m-2">Data Per Halaman : {{ $data->perPage() }} </p>

@@ -108,19 +108,11 @@
                             </table>
                         </div>
                         <hr>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $data->previousPageUrl() }}">back</a>
-                                </li>
-                                <li class="page-item  disabled"><a class="page-link" href="#">
-                                        {{ $data->currentPage() }}</a></li>
-
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $data->nextPageUrl() }}">next</a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <div class="paginationts">
+                            <a href="{{ $data->previousPageUrl() }}" class="prev @if ($data->currentPage() === 1) {{'disabled'}} @endif">Previous</a>
+                            <a href="#" class="disabled active">{{ $data->currentPage() }}</a>
+                            <a href="{{ $data->nextPageUrl() }}" class="next @if($data->currentPage()== $data->lastPage()) {{"disabled"}} @endif">Next</a>
+                        </div>
                         <hr>
                         <p class="text-xs font-weight-bold m-2">Jumlah Dokter : {{ $data->total() }}</p>
                         <p class="text-xs font-weight-bold m-2">Data Per Halaman : {{ $data->perPage() }} </p>

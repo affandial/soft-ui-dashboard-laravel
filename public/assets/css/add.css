@@ -1,0 +1,38 @@
+
+  .paginationts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.paginationts a {
+  color: #333;
+  background-color: #f5f5f5;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 4px;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+.paginationts a.active {
+  background-color: #8d8989;
+  color: #fff;
+}
+
+.paginationts a:hover {
+  background-color: #8d8989;
+  color: #fff;
+}
+
+.paginationts a.prev, .paginationts a.next {
+  font-weight: bold;
+}
+
+.paginationts a.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+

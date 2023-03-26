@@ -2,22 +2,23 @@
 
 @section('content')
     @csrf
-
     @if (session('status'))
-        <div class="m-3  d-flex justify-content-center align-items-center alert alert-success alert-dismissible fade show"
-            style="position:fixed;top: 0;left: 0;bottom: 0;right: 0;background-color:red;z-index: 9999;" id="alert-success"
-            role="alert">
-            <form action="/add" method="POST"">
+        <div class="m-3 pesan d-flex justify-content-center align-items-center alert alert-success alert-dismissible fade show"
+            style="background-size: cover;background-image: url('../assets/img/1932.jpg');position:fixed;top: 0;left: 0;bottom: 0;right: 0;z-index: 9999;"
+            id="alert-success" role="alert">
+            <form action="/add" method="POST">
                 @csrf
                 <div class="form-group">
-                    <h1>KLINIK SAAT INI SEDANG DALAM KEADAAN TUTUP, APAKAH ANDA INGIN MEMBUKA KLINIK</h1>
-                </div>\
+                    <center>
+                        <h1>KLINIK SAAT INI SEDANG DALAM KEADAAN TUTUP, APAKAH ANDA INGIN MEMBUKA KLINIK</h1>
+                    </center>
+                </div>
                 <input type="hidden" value="open" name="status" id="status">
                 <center>
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn btn-primary bg-success" type="submit">
                         <h1>YA</h1>
                     </button> &nbsp;&nbsp;
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="alert" aria-label="Close">
+                    <button type="button" class="btn btn-secondary bg-transparant" data-bs-dismiss="alert" aria-label="Close">
                         <h1>TIDAK<h1>
                     </button>
                 </center>
