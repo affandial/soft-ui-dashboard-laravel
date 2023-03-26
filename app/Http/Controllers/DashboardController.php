@@ -13,6 +13,16 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+  public function info()
+  {
+    $status = statusklinik::find(1);
+
+    // $data = [
+    //   'status' => $status->status,
+    // ];
+    return response()->json($status->status);
+  }
+
   public function index($status = null)
   {
     $patient = Patient::all()->count();
