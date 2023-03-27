@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/', [HomeController::class, 'home']);
   Route::get('dashboard/{status?}', [DashboardController::class, 'index']);
   Route::post('add', [DashboardController::class, 'update']);
+  Route::get('open_klinik', [DashboardController::class, 'open_klinik']);
+  Route::get('close_klinik', [DashboardController::class, 'close_klinik']);
 
   # Route Treatment / Penanganan
   Route::get('treatment', [TreatmentController::class, 'index']);
@@ -88,3 +90,4 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('info', [DashboardController::class, 'info']);
+Route::get('force_closed', [DashboardController::class, 'tutup']);

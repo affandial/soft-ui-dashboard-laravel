@@ -1,38 +1,106 @@
-
-  .paginationts {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
+.paginationts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .paginationts a {
-  color: #333;
-  background-color: #f5f5f5;
-  padding: 8px 12px;
-  text-decoration: none;
-  border-radius: 4px;
-  margin: 0 5px;
-  transition: background-color 0.3s ease;
+    color: #333;
+    background-color: #f5f5f5;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
 }
 
 .paginationts a.active {
-  background-color: #8d8989;
-  color: #fff;
+    background-color: #8d8989;
+    color: #fff;
 }
 
 .paginationts a:hover {
-  background-color: #8d8989;
-  color: #fff;
+    background-color: #8d8989;
+    color: #fff;
 }
 
-.paginationts a.prev, .paginationts a.next {
-  font-weight: bold;
+.paginationts a.prev,
+.paginationts a.next {
+    font-weight: bold;
 }
 
 .paginationts a.disabled {
-  pointer-events: none;
-  opacity: 0.5;
+    pointer-events: none;
+    opacity: 0.5;
 }
 
+/*
+.switch-holderers {
+    display: flex;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: -4px -4px 7px rgba(93, 23, 23, 0.7),
+        5px 5px 5px rgba(0, 0, 0, 0.3),
+        inset 4px 4px 7px rgba(255, 255, 255, 0.7),
+        inset 5px 5px 5px rgba(0, 0, 0, 0.3);
+    justify-content: space-between;
+    align-items: center;
+} */
 
+.switch-labelel {
+    width: 100px;
+}
+
+.switch-labelel i {
+    margin-right: 5px;
+}
+
+.switch-togglele {
+    height: 40px;
+}
+
+.switch-togglele input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    z-index: -2;
+}
+
+.switch-togglele input[type="checkbox"] + label {
+    position: relative;
+    display: inline-block;
+    width: 110px;
+    height: 40px;
+    border-radius: 20px;
+    margin: 0;
+    cursor: pointer;
+    box-shadow: -4px -4px 7px rgba(93, 23, 23, 0.7),
+        inset -8px -8px 15px rgba(255, 255, 255, 0.6),
+        inset 10px 10px 10px rgba(0, 0, 0, 0.25);
+}
+
+.switch-togglele input[type="checkbox"] + label::before {
+    position: absolute;
+    content: "TUTUP";
+    font-size: 13px;
+    text-align: center;
+    line-height: 30px;
+    top: 5px;
+    left: 8px;
+    width: 70px;
+    height: 30px;
+    border-radius: 20px;
+    background-color: #d1dad3;
+    box-shadow: -3px -3px 5px rgba(255, 255, 255, 0.5),
+        3px 3px 5px rgba(0, 0, 0, 0.25);
+    transition: 0.3s ease-in-out;
+}
+
+.switch-togglele input[type="checkbox"]:checked + label::before {
+    left: 30%;
+    content: "BUKA";
+    color: #fff;
+    background-color: #00b33c;
+    box-shadow: -3px -3px 5px rgba(255, 255, 255, 0.5), 3px 3px 5px #00b33c;
+}

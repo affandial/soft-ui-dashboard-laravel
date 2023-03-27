@@ -18,7 +18,8 @@
                     <button class="btn btn-primary bg-success" type="submit">
                         <h1>YA</h1>
                     </button> &nbsp;&nbsp;
-                    <button type="button" class="btn btn-secondary bg-transparant" data-bs-dismiss="alert" aria-label="Close">
+                    <button type="button" class="btn btn-secondary bg-transparant" data-bs-dismiss="alert"
+                        aria-label="Close">
                         <h1>TIDAK<h1>
                     </button>
                 </center>
@@ -28,24 +29,21 @@
             </button>
         </div>
     @endif
-    <?php
-    if ($statusklinik->status == 'open') {
-        $buka = '';
-        $tutup = '-active';
-        $kb = 'disabled';
-        $kt = '';
-        $bb = 'bg-gradient-success';
-        $bt = 'bg-gradient-secondary';
-    } else {
-        $buka = '-active';
-        $tutup = '';
-        $kb = '';
-        $kt = 'disabled';
-        $bt = 'bg-gradient-success';
-        $bb = 'bg-gradient-secondary';
-    } ?>
+
+     {{-- <div class="d-flex justify-content-end"> --}}
+    {{-- <div class="switch-holderers">
+        <div class="switch-labelel">
+            <i class="fa fa-bluetooth-b"></i><span>TOKO</span>
+        </div>
+        <div class="switch-togglele">
+            <input type="checkbox" id="bluetooth" checked />
+            <label for="bluetooth"></label>
+        </div>
+    </div> --}}
+    {{-- </div> --}}
     <div class="row">
-        <div class="d-flex flex-row justify-content-end pt-0">
+
+        {{-- <div class="d-flex flex-row justify-content-end pt-0">
             <form action="add" method="POST">
                 @csrf
                 <input type="hidden" value="open" name="status">
@@ -58,7 +56,7 @@
                 <button type="submit" class='btn btn{{ $tutup }}-primary {{ $bt }}'
                     {{ $kt }}>TUTUP</button>
             </form>
-        </div>
+        </div> --}}
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
                 <div class="card-body p-3">
@@ -160,4 +158,7 @@
             </div>
         </div>
     </div>
+    <script>
+        localStorage.setItem("status_klinik", "{{$statusklinik->status}}");
+    </script>
 @endsection

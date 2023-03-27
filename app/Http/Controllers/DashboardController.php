@@ -23,6 +23,34 @@ class DashboardController extends Controller
     return response()->json($status->status);
   }
 
+  public function tutup()
+  {
+    $status = statusklinik::find(1);
+    $status->update([
+      'status'      => 'closed'
+    ]);
+
+    return response()->json(['Message'=>'Berhasil Tutup Toko', 'Status'=>$status->status]);
+  }
+
+  public function open_klinik()
+  {
+    $status = statusklinik::find(1);
+    $status->update([
+      'status'      => 'open'
+    ]);
+    return redirect()->back();
+  }
+
+  public function close_klinik()
+  {
+    $status = statusklinik::find(1);
+    $status->update([
+      'status'      => 'closed'
+    ]);
+    return redirect()->back();
+  }
+
   public function index($status = null)
   {
     $patient = Patient::all()->count();
@@ -46,10 +74,10 @@ class DashboardController extends Controller
     $status = statusklinik::find(1);
     Log::channel('stderr')->info("Masuk ke posting,reqguestnya " . $request->status ." ini didb".$status['status']);
     if ($status['status'] == $request->status) {
-      return redirect('/');
+      return redirect()->back();
     } else {
       $status->update(['status' => $request->status]);
-      return   redirect('/');
+      return   redirect()->back();
     }
   }
 }
