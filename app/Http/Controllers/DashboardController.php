@@ -69,8 +69,6 @@ class DashboardController extends Controller
 
   public function update(Request $request)
   {
-
-
     $status = statusklinik::find(1);
     Log::channel('stderr')->info("Masuk ke posting,reqguestnya " . $request->status ." ini didb".$status['status']);
     if ($status['status'] == $request->status) {
