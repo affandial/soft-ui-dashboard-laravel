@@ -5,12 +5,14 @@
         <div class="row">
             <div class="col-12">
                 @if (session('success'))
-                    <div class="m-4 alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
-                        <span class="alert-text text-white">
-                            {{ session('success') }}</span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                            <i class="fa fa-close" aria-hidden="true"></i>
-                        </button>
+                    <div class="popupes d-flex justify-content-center align-items-center alert alert-dismissible fade show"
+                        style="position:fixed;z-index: 9999;" id="alert-success" role="alert">
+                        <div class="popupes-content">
+                            <p>{{ session('success') }}</p>&nbsp;&nbsp;
+                            <button type="button" class="btn" data-bs-dismiss="alert" aria-label="Close">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 @endif
                 <div class="card mb-4 mx-4">
