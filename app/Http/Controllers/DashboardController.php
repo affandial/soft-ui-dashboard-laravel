@@ -15,12 +15,13 @@ class DashboardController extends Controller
 {
   public function info()
   {
-    $status = statusklinik::find(1);
-
-    // $data = [
-    //   'status' => $status->status,
-    // ];
-    return response()->json($status->status);
+    try {
+      $status = statusklinik::find(1);
+      return response()->json(['message' => $status->status], 200);
+    } catch (\Exception $e) {
+      // Handle the exception
+      return response()->json(['error' => $e->getMessage()], 500);
+    }
   }
 
   public function tutup()
@@ -30,7 +31,7 @@ class DashboardController extends Controller
       'status'      => 'closed'
     ]);
 
-    return response()->json(['Message'=>'Berhasil Tutup Toko', 'Status'=>$status->status]);
+    return response()->json(['Message' => 'Berhasil Tutup Toko', 'Status' => $status->status]);
   }
 
   public function open_klinik()
@@ -61,7 +62,7 @@ class DashboardController extends Controller
     $statusklinik = statusklinik::find(1);
 
     if ($status == 'closed') {
-      return view('dashboard', ['statusklinik'=>$statusklinik,'status' => 'closed', 'patient' => $patient, 'dentist' => $dentist, 'confirmed' => $confirmed, 'canceled' => $canceled, 'treatment' => $treatment]);
+      return view('dashboard', ['statusklinik' => $statusklinik, 'status' => 'closed', 'patient' => $patient, 'dentist' => $dentist, 'confirmed' => $confirmed, 'canceled' => $canceled, 'treatment' => $treatment]);
     }
 
     return view('dashboard', ['statusklinik' => $statusklinik, 'patient' => $patient, 'dentist' => $dentist, 'confirmed' => $confirmed, 'canceled' => $canceled, 'treatment' => $treatment]);
@@ -70,7 +71,7 @@ class DashboardController extends Controller
   public function update(Request $request)
   {
     $status = statusklinik::find(1);
-    Log::channel('stderr')->info("Masuk ke posting,reqguestnya " . $request->status ." ini didb".$status['status']);
+    Log::channel('stderr')->info("Masuk ke posting,reqguestnya " . $request->status . " ini didb" . $status['status']);
     if ($status['status'] == $request->status) {
       return redirect()->back();
     } else {
