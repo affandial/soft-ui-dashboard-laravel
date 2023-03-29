@@ -15,7 +15,7 @@ class AppointmentController extends Controller
   {
     $data = Appointment::select('appointments.*', 'patients.name', 'patients.phone_no')
       ->join('patients', 'appointments.patient_id', '=', 'patients.id')
-      ->where('date', '=', Appointment::raw('CURDATE()'))->orderBy('date', 'asc')->paginate(20);
+      ->whereDate('date', '=', now())->orderBy('date', 'asc')->paginate(20);
     return view('laravel-examples/today', ['data' => $data]);
   }
 
@@ -25,7 +25,7 @@ class AppointmentController extends Controller
 
     $data = Appointment::select('appointments.*', 'patients.name', 'patients.phone_no')
       ->join('patients', 'appointments.patient_id', '=', 'patients.id')
-      ->where('date', '<', now())
+      ->whereDate('date', '<', now())
       ->orderBy('date', 'asc')
       ->paginate(20);
     return view('laravel-examples/last', ['data' => $data]);
@@ -36,7 +36,7 @@ class AppointmentController extends Controller
     Log::channel('stderr')->info("error");
     $data = Appointment::select('appointments.*', 'patients.name', 'patients.phone_no')
       ->join('patients', 'appointments.patient_id', '=', 'patients.id')
-      ->where('date', '>', now())
+      ->whereDate('date', '>', now())
       ->orderBy('date', 'asc')
       ->paginate(20);
     return view('laravel-examples/next-temu', ['data' => $data]);

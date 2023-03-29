@@ -21,9 +21,9 @@
                     </div>
                     <div class="card-header pb-0 pt-0">
                         <div class="d-flex flex-row ">
-                            <a href="{{ url('next') }}">
-                                <span class="badge badge-sm bg-gradient-light btn-outline-secondary">Besok</span></a>&nbsp;
-                            <span class="badge badge-sm bg-gradient-secondary">Hari Ini</span>&nbsp;
+                           <span class="badge badge-sm bg-gradient-secondary">Besok</span>&nbsp;
+                            <a href="{{ url('today') }}">
+                                <span class="badge badge-sm bg-gradient-light btn-outline-secondary">Hari Ini</span></a>&nbsp;
                             <a href="{{ url('last') }}">
                                 <span
                                     class="badge badge-sm bg-gradient-light btn-outline-secondary">Kemarin</span></a>&nbsp;
