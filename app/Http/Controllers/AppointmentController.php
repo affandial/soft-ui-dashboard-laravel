@@ -67,6 +67,7 @@ class AppointmentController extends Controller
     // return redirect()->away("https://wa.me/".$data->phone_no)->header('target', '_blank');
     return redirect()->back()->with(['success' => 'Jadwal berhasil di' . $request->status]);
   }
+  
   public function store(Request $request)
   {
     Log::channel('stderr')->info("Parent :  Controller Store");
@@ -74,8 +75,15 @@ class AppointmentController extends Controller
       'patient_id'      => ['required'],
       'date'     => ['required', 'date', 'after_or_equal:today']
     ]);
-    $data['status'] = 'pending';
-    Appointment::create($data);
-    return redirect()->back()->with(['success' => 'Jadwal berhasil di buat']);
+    $find = Appointment::where('patient_id',$data['patient_id'])->whereDate('date',$data['date'])->first();
+    if ($find) {
+      Log::channel('stderr')->info("Jadwal Sudah terdaftar \n\n");
+      return redirect()->back()->with(['error' => 'Jadwal sudah terdaftar']);
+    } else {
+      Log::channel('stderr')->info("Jadwal blm terdaftar \n\n");
+      $data['status'] = 'pending';
+      Appointment::create($data);
+      return redirect()->back()->with(['success' => 'Jadwal berhasil di buat']);
+    }
   }
 }

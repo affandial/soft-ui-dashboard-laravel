@@ -29,10 +29,10 @@
                 <div class="card-body pt-4 p-3">
                     <form action="add-jadwal" method="POST" role="form text-left" onsubmit="return konfirmasiSubmit()">
                         @csrf
-                        @if ($errors->any())
+                        @if (session('error'))
                             <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
                                 <span class="alert-text text-white">
-                                    {{ $errors->first() }}</span>
+                                    {{ session('error') }}</span>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                                     <i class="fa fa-close" aria-hidden="true"></i>
                                 </button>
