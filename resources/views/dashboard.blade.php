@@ -152,7 +152,7 @@
         </div>
     </div>
     <script>
-        localStorage.setItem("status_klinik", "{{$statusklinik->status}}");
+        localStorage.setItem("status_klinik", "{{ $statusklinik->status }}");
     </script>
 @endsection
 
@@ -160,21 +160,20 @@
     <script>
         window.onload = function() {
             const months = {
-                "01": 'Januari',
-                "02": 'Februari',
-                "03": 'Maret',
-                "04": 'April',
-                "05": 'Mei',
-                "06": 'Juni',
-                "07": 'Juli',
-                "08": 'Agustus',
-                "09": 'September',
-                "10": 'Oktober',
-                "11": 'November',
-                "12": 'Desember',
+                1: 'Januari',
+                2: 'Februari',
+                3: 'Maret',
+                4: 'April',
+                5: 'Mei',
+                6: 'Juni',
+                7: 'Juli',
+                8: 'Agustus',
+                9: 'September',
+                10: 'Oktober',
+                11: 'November',
+                12: 'Desember',
             }
-            async function fetchDataBar() {
-                const url = 'http://localhost:8000/this_year';
+            async function fetchDataBar(url) {
                 try {
                     const response = await fetch(url);
                     const data = await response.json();
@@ -185,35 +184,34 @@
                 }
             }
 
-            async function getDataBar() {
-                const isi_data = await fetchDataBar();
-                const data = isi_data.data.map(e => months[e.bulan])
-                const total_data = isi_data.data.map(e => e.total)
-                const cancel = isi_data.data_cancel.map(e => months[e.bulan])
-                const total_cancel = isi_data.data_cancel.map(e => e.total)
+            async function getDataBar(url) {
+                const isi_data = await fetchDataBar(url);
+                const data = isi_data.data.map(e => months[parseInt(e.bulan)])
+                const total_data = isi_data.data.map(e => e.total_data)
+                const total_cancel = isi_data.data.map(e => e.total_cancel)
                 var ctx = document.getElementById("chart-bars").getContext("2d");
                 new Chart(ctx, {
                     type: "bar",
                     data: {
                         labels: data,
                         datasets: [{
-                            label: "Ditangani",
+                            label: "Total Appointment",
                             tension: 0.4,
                             borderWidth: 0,
                             borderRadius: 4,
                             borderSkipped: false,
                             backgroundColor: "green",
                             data: total_data,
-                            maxBarThickness: 6
+                            maxBarThickness: 2
                         }, {
-                            label: "Cancel",
+                            label: "Appointment Cancel",
                             tension: 0.4,
                             borderWidth: 0,
                             borderRadius: 4,
                             borderSkipped: false,
                             backgroundColor: "red",
                             data: total_cancel,
-                            maxBarThickness: 6
+                            maxBarThickness: 2
                         }],
                     },
                     options: {
@@ -268,104 +266,134 @@
 
             }
 
-            getDataBar()
+            getDataBar('http://localhost:8000/this_year')
+            getDataChart('http://localhost:8000/this_month');
+            async function getDataChart(url) {
+                const isi_data = await fetchDataBar(url);
+                console.log(isi_data);
+                const dateToday = (new Date()).getDate()
+                const dates = Array.from(Array(dateToday).keys(), i => (i + 1).toString().padStart(2, '0'));
+                let datas = []
 
-             var ctx2 = document.getElementById("chart-line").getContext("2d");
+                for (let x = 1; x <= dateToday; x++) {
+                    const result = isi_data.data.find(item => parseInt(item.date) === x);
+                    if (result) {
+                        datas.push({
+                            "pending": result.pending_count,
+                            'cancel': result.cancel_count
+                        })
+                    } else {
+                        datas.push({
+                            "pending": 0,
+                            'cancel': 0
+                        })
+                    }
+                }
+                const pending =  datas.map(e=>e.pending)
+                const cancel =  datas.map(e=>e.cancel)
+                console.log(pending,cancel);
+
+                var ctx2 = document.getElementById("chart-line").getContext("2d");
                 var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
                 gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
                 gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
                 gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)');
-            //purple colors
-            var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
-            gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
-            gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-            gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
-            new Chart(ctx2, {
-                type: "line",
-                data: {
-                    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                    datasets: [{
-                            label: "Mobile apps",
-                            tension: 0.4,
-                            borderWidth: 0,
-                            pointRadius: 0,
-                            borderColor: "#cb0c9f",
-                            borderWidth: 3,
-                            backgroundColor: gradientStroke1,
-                            fill: true,
-                            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                            maxBarThickness: 6
-                        },
-                        {
-                            label: "Websites",
-                            tension: 0.4,
-                            borderWidth: 0,
-                            pointRadius: 0,
-                            borderColor: "#3A416F",
-                            borderWidth: 3,
-                            backgroundColor: gradientStroke2,
-                            fill: true,
-                            data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-                            maxBarThickness: 6
-                        },
-                    ],
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false,
-                        }
-                    },
-                    interaction: {
-                        intersect: false,
-                        mode: 'index',
-                    },
-                    scales: {
-                        y: {
-                            grid: {
-                                drawBorder: false,
-                                display: true,
-                                drawOnChartArea: true,
-                                drawTicks: false,
-                                borderDash: [5, 5]
+                //purple colors
+                var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
+                gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
+                gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+                gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+                new Chart(ctx2, {
+                    type: "line",
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                                label: "Pending",
+                                tension: 0.4,
+                                borderWidth: 0,
+                                pointRadius: 0,
+                                borderColor: "#cb0c9f",
+                                borderWidth: 3,
+                                backgroundColor: gradientStroke1,
+                                fill: true,
+                                data:pending,
+                                maxBarThickness: 6
                             },
-                            ticks: {
-                                display: true,
-                                padding: 10,
-                                color: '#b2b9bf',
-                                font: {
-                                    size: 11,
-                                    family: "Open Sans",
-                                    style: 'normal',
-                                    lineHeight: 2
-                                },
-                            }
-                        },
-                        x: {
-                            grid: {
-                                drawBorder: false,
+                            {
+                                label: "Cancel",
+                                tension: 0.4,
+                                borderWidth: 0,
+                                pointRadius: 0,
+                                borderColor: "#3A416F",
+                                borderWidth: 3,
+                                backgroundColor: gradientStroke2,
+                                fill: true,
+                                data: cancel,
+                                maxBarThickness: 6
+                            },
+                        ],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
                                 display: false,
-                                drawOnChartArea: false,
-                                drawTicks: false,
-                                borderDash: [5, 5]
-                            },
-                            ticks: {
-                                display: true,
-                                color: '#b2b9bf',
-                                padding: 20,
-                                font: {
-                                    size: 11,
-                                    family: "Open Sans",
-                                    style: 'normal',
-                                    lineHeight: 2
-                                },
                             }
                         },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index',
+                        },
+                        scales: {
+                            y: {
+                                grid: {
+                                    drawBorder: false,
+                                    display: true,
+                                    drawOnChartArea: true,
+                                    drawTicks: false,
+                                    borderDash: [5, 5]
+                                },
+                                ticks: {
+                                    display: true,
+                                    padding: 10,
+                                    color: '#b2b9bf',
+                                    font: {
+                                        size: 11,
+                                        family: "Open Sans",
+                                        style: 'normal',
+                                        lineHeight: 2
+                                    },
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    drawBorder: false,
+                                    display: false,
+                                    drawOnChartArea: false,
+                                    drawTicks: false,
+                                    borderDash: [5, 5]
+                                },
+                                ticks: {
+                                    display: true,
+                                    color: '#b2b9bf',
+                                    padding: 20,
+                                    font: {
+                                        size: 11,
+                                        family: "Open Sans",
+                                        style: 'normal',
+                                        lineHeight: 2
+                                    },
+                                }
+                            },
+                        },
                     },
-                },
-            });
+                });
+
+
+
+            }
+
         }
     </script>
 @endpush

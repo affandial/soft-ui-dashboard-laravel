@@ -16,18 +16,13 @@ class DashboardController extends Controller
   public function this_year()
   {
     try {
-      $data = Treatment::select(Treatment::raw("DATE_FORMAT(date, '%m') AS bulan, COALESCE(COUNT(*), 0) AS total"))
-        ->where('date', '>=', '2023-01-01')
-        ->where('date', '<', Treatment::raw("DATE_FORMAT(NOW(), '%Y-%m-01')"))
-        ->groupBy(Treatment::raw("DATE_FORMAT(date, '%m')"))
+      $data = Appointment::select(Appointment::raw('YEAR(date) AS tahun, MONTH(date) AS bulan, COUNT(*) AS total_data, SUM(CASE WHEN status = "cancel" THEN 1 ELSE 0 END) AS total_cancel'))
+        ->whereRaw('date >= DATE_FORMAT(NOW(), "%Y-01-01")')
+        ->whereRaw('date < DATE_FORMAT(NOW(), "%Y-%m-01")')
+        ->groupBy(Appointment::raw('YEAR(date), MONTH(date)'))
         ->get();
-      $data_cancel = Appointment::select(Appointment::raw("DATE_FORMAT(date, '%m') AS bulan, COALESCE(COUNT(*), 0) AS total"))
-      ->where('date', '>=', '2023-01-01')
-      ->where('date', '<', Appointment::raw("DATE_FORMAT(NOW(), '%Y-%m-01')"))
-      ->where('status','=','cancel')
-      ->groupBy(Appointment::raw("DATE_FORMAT(date, '%m')"))
-      ->get();
-      return  response()->json(['data' => $data, 'data_cancel'=>$data_cancel], 200);
+
+      return  response()->json(['data' => $data], 200);
     } catch (\Exception $e) {
       return response()->json(['data' => $e->getMessage()], 500);
     }
@@ -37,17 +32,30 @@ class DashboardController extends Controller
   {
     try {
       $month = date('m');
-      $data = Appointment:: select(Appointment::raw('DATE(date) as tanggal'), Appointment::raw('COUNT(*) as jumlah'))
+
+      $data = Appointment::
+            select(Appointment::raw('DATE_FORMAT(date, "%d") as date'),
+                     Appointment::raw('SUM(CASE WHEN status = "pending" THEN 1 ELSE 0 END) as pending_count'),
+                     Appointment::raw('SUM(CASE WHEN status = "cancel" THEN 1 ELSE 0 END) as cancel_count'))
+            ->whereRaw('MONTH(date) = MONTH(NOW())')
+            ->whereRaw('YEAR(date) = YEAR(NOW())')
+            ->groupBy(Appointment::raw('date'))
+            ->get();
+
+      $data1 = Appointment::select(Appointment::raw('DATE(date) as tanggal'), Appointment::raw('COUNT(*) as jumlah'))
         ->where('date', '>=', Appointment::raw("DATE_FORMAT(NOW(), '%Y-%m-01')"))
+        ->where('status', '=', 'cancel')
         ->groupBy('tanggal')
         ->get();
+
       $data_cancel = Appointment::select(Appointment::raw("DATE_FORMAT(date, '%m') AS bulan, COALESCE(COUNT(*), 0) AS total"))
-      ->where('date', '>=', '2023-01-01')
-      ->where('date', '<', Appointment::raw("DATE_FORMAT(NOW(), '%Y-%m-01')"))
-      ->where('status', '=', 'cancel')
-      ->groupBy(Appointment::raw("DATE_FORMAT(date, '%m')"))
-      ->get();
-      return  response()->json(['data' => $data, 'data_cancel' => $data_cancel], 200);
+        ->where('date', '>=', '2023-01-01')
+        ->where('date', '<', Appointment::raw("DATE_FORMAT(NOW(), '%Y-%m-01')"))
+        ->where('status', '=', 'cancel')
+        ->groupBy(Appointment::raw("DATE_FORMAT(date, '%m')"))
+        ->get();
+
+      return  response()->json(['data' => $data], 200);
     } catch (\Exception $e) {
       return response()->json(['data' => $e->getMessage()], 500);
     }
