@@ -90,4 +90,6 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('info', [DashboardController::class, 'info']);
+Route::get('this_year', [DashboardController::class, 'this_year']);
+Route::get('this_month', [DashboardController::class, 'this_month']);
 Route::get('force_closed', [DashboardController::class, 'tutup']);

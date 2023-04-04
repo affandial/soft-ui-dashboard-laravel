@@ -1,5 +1,6 @@
 @extends('layouts.user_type.auth')
 
+
 @section('content')
     @csrf
     @if (session('status'))
@@ -29,34 +30,8 @@
             </button>
         </div>
     @endif
-
-     {{-- <div class="d-flex justify-content-end"> --}}
-    {{-- <div class="switch-holderers">
-        <div class="switch-labelel">
-            <i class="fa fa-bluetooth-b"></i><span>TOKO</span>
-        </div>
-        <div class="switch-togglele">
-            <input type="checkbox" id="bluetooth" checked />
-            <label for="bluetooth"></label>
-        </div>
-    </div> --}}
-    {{-- </div> --}}
+    {{-- Header Data --}}
     <div class="row">
-
-        {{-- <div class="d-flex flex-row justify-content-end pt-0">
-            <form action="add" method="POST">
-                @csrf
-                <input type="hidden" value="open" name="status">
-                <button type="submit" class='btn btn{{ $buka }}-primary {{ $bb }}'
-                    {{ $kb }}>BUKA</button> &nbsp; &nbsp;
-            </form>
-            <form action="add" method="POST">
-                @csrf
-                <input type="hidden" value="closed" name="status">
-                <button type="submit" class='btn btn{{ $tutup }}-primary {{ $bt }}'
-                    {{ $kt }}>TUTUP</button>
-            </form>
-        </div> --}}
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
                 <div class="card-body p-3">
@@ -146,15 +121,33 @@
             </div>
         </div>
     </div>
+
     <div class="row mt-4">
-
-        <div class="col">
-            <div class="card z-index-1">
-                <div class="card-header pb-0">
-                    <img src="../assets/img/welcome.png" style="width: 100%;  height: 100%;  object-fit: cover;">
-
+        <div class="col-lg-5 mb-lg-0 mb-4">
+            <div class="card-body p-3">
+                <div class="bg-gradient-dark border-radius-lg py-3 pe-1 mb-3">
+                    <div class="chart">
+                        <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
+                    </div>
                 </div>
-
+                {{-- <h6 class="ms-2 mt-4 mb-0"> Total Appointment Users </h6> --}}
+                <div class="container border-radius-lg">
+                    Data grafik pasien yang membuat janji / jadwal untuk pemeriksaan di klinik Gigi dari awal tahun untuk
+                    memantau proses penjadwalan pasien
+                    kebelakang
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="card z-index-2">
+                <div class="card-header pb-0">
+                    <h6>REPORT BULAN INI</h6>
+                </div>
+                <div class="card-body p-3">
+                    <div class="chart">
+                        <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -162,3 +155,217 @@
         localStorage.setItem("status_klinik", "{{$statusklinik->status}}");
     </script>
 @endsection
+
+@push('dashboard')
+    <script>
+        window.onload = function() {
+            const months = {
+                "01": 'Januari',
+                "02": 'Februari',
+                "03": 'Maret',
+                "04": 'April',
+                "05": 'Mei',
+                "06": 'Juni',
+                "07": 'Juli',
+                "08": 'Agustus',
+                "09": 'September',
+                "10": 'Oktober',
+                "11": 'November',
+                "12": 'Desember',
+            }
+            async function fetchDataBar() {
+                const url = 'http://localhost:8000/this_year';
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error('Error fetching data from API:', error);
+                    return null;
+                }
+            }
+
+            async function getDataBar() {
+                const isi_data = await fetchDataBar();
+                const data = isi_data.data.map(e => months[e.bulan])
+                const total_data = isi_data.data.map(e => e.total)
+                const cancel = isi_data.data_cancel.map(e => months[e.bulan])
+                const total_cancel = isi_data.data_cancel.map(e => e.total)
+                var ctx = document.getElementById("chart-bars").getContext("2d");
+                new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: data,
+                        datasets: [{
+                            label: "Ditangani",
+                            tension: 0.4,
+                            borderWidth: 0,
+                            borderRadius: 4,
+                            borderSkipped: false,
+                            backgroundColor: "green",
+                            data: total_data,
+                            maxBarThickness: 6
+                        }, {
+                            label: "Cancel",
+                            tension: 0.4,
+                            borderWidth: 0,
+                            borderRadius: 4,
+                            borderSkipped: false,
+                            backgroundColor: "red",
+                            data: total_cancel,
+                            maxBarThickness: 6
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false,
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index',
+                        },
+                        scales: {
+                            y: {
+                                grid: {
+                                    drawBorder: false,
+                                    display: false,
+                                    drawOnChartArea: false,
+                                    drawTicks: false,
+                                },
+                                ticks: {
+                                    suggestedMin: 0,
+                                    suggestedMax: 100,
+                                    beginAtZero: false,
+                                    padding: 15,
+                                    font: {
+                                        size: 14,
+                                        family: "Open Sans",
+                                        style: 'normal',
+                                        lineHeight: 2
+                                    },
+                                    color: "#fff"
+                                },
+                            },
+                            x: {
+                                grid: {
+                                    drawBorder: false,
+                                    display: false,
+                                    drawOnChartArea: false,
+                                    drawTicks: false
+                                },
+                                ticks: {
+                                    display: true
+                                },
+                            },
+                        },
+                    },
+                });
+
+
+            }
+
+            getDataBar()
+
+             var ctx2 = document.getElementById("chart-line").getContext("2d");
+                var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
+                gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
+                gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+                gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)');
+            //purple colors
+            var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
+            gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
+            gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+            gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+            new Chart(ctx2, {
+                type: "line",
+                data: {
+                    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                            label: "Mobile apps",
+                            tension: 0.4,
+                            borderWidth: 0,
+                            pointRadius: 0,
+                            borderColor: "#cb0c9f",
+                            borderWidth: 3,
+                            backgroundColor: gradientStroke1,
+                            fill: true,
+                            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+                            maxBarThickness: 6
+                        },
+                        {
+                            label: "Websites",
+                            tension: 0.4,
+                            borderWidth: 0,
+                            pointRadius: 0,
+                            borderColor: "#3A416F",
+                            borderWidth: 3,
+                            backgroundColor: gradientStroke2,
+                            fill: true,
+                            data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
+                            maxBarThickness: 6
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index',
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                drawBorder: false,
+                                display: true,
+                                drawOnChartArea: true,
+                                drawTicks: false,
+                                borderDash: [5, 5]
+                            },
+                            ticks: {
+                                display: true,
+                                padding: 10,
+                                color: '#b2b9bf',
+                                font: {
+                                    size: 11,
+                                    family: "Open Sans",
+                                    style: 'normal',
+                                    lineHeight: 2
+                                },
+                            }
+                        },
+                        x: {
+                            grid: {
+                                drawBorder: false,
+                                display: false,
+                                drawOnChartArea: false,
+                                drawTicks: false,
+                                borderDash: [5, 5]
+                            },
+                            ticks: {
+                                display: true,
+                                color: '#b2b9bf',
+                                padding: 20,
+                                font: {
+                                    size: 11,
+                                    family: "Open Sans",
+                                    style: 'normal',
+                                    lineHeight: 2
+                                },
+                            }
+                        },
+                    },
+                },
+            });
+        }
+    </script>
+@endpush

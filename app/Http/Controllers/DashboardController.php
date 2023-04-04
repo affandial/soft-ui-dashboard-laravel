@@ -13,13 +13,52 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+  public function this_year()
+  {
+    try {
+      $data = Treatment::select(Treatment::raw("DATE_FORMAT(date, '%m') AS bulan, COALESCE(COUNT(*), 0) AS total"))
+        ->where('date', '>=', '2023-01-01')
+        ->where('date', '<', Treatment::raw("DATE_FORMAT(NOW(), '%Y-%m-01')"))
+        ->groupBy(Treatment::raw("DATE_FORMAT(date, '%m')"))
+        ->get();
+      $data_cancel = Appointment::select(Appointment::raw("DATE_FORMAT(date, '%m') AS bulan, COALESCE(COUNT(*), 0) AS total"))
+      ->where('date', '>=', '2023-01-01')
+      ->where('date', '<', Appointment::raw("DATE_FORMAT(NOW(), '%Y-%m-01')"))
+      ->where('status','=','cancel')
+      ->groupBy(Appointment::raw("DATE_FORMAT(date, '%m')"))
+      ->get();
+      return  response()->json(['data' => $data, 'data_cancel'=>$data_cancel], 200);
+    } catch (\Exception $e) {
+      return response()->json(['data' => $e->getMessage()], 500);
+    }
+  }
+
+  public function this_month()
+  {
+    try {
+      $month = date('m');
+      $data = Appointment:: select(Appointment::raw('DATE(date) as tanggal'), Appointment::raw('COUNT(*) as jumlah'))
+        ->where('date', '>=', Appointment::raw("DATE_FORMAT(NOW(), '%Y-%m-01')"))
+        ->groupBy('tanggal')
+        ->get();
+      $data_cancel = Appointment::select(Appointment::raw("DATE_FORMAT(date, '%m') AS bulan, COALESCE(COUNT(*), 0) AS total"))
+      ->where('date', '>=', '2023-01-01')
+      ->where('date', '<', Appointment::raw("DATE_FORMAT(NOW(), '%Y-%m-01')"))
+      ->where('status', '=', 'cancel')
+      ->groupBy(Appointment::raw("DATE_FORMAT(date, '%m')"))
+      ->get();
+      return  response()->json(['data' => $data, 'data_cancel' => $data_cancel], 200);
+    } catch (\Exception $e) {
+      return response()->json(['data' => $e->getMessage()], 500);
+    }
+  }
+
   public function info()
   {
     try {
       $status = statusklinik::find(1);
       return response()->json(['message' => $status->status], 200);
     } catch (\Exception $e) {
-      // Handle the exception
       return response()->json(['error' => $e->getMessage()], 500);
     }
   }
