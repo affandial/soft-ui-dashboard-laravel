@@ -31,31 +31,27 @@ class DashboardController extends Controller
   public function this_month()
   {
     try {
-      $month = date('m');
-
-      $data = Appointment::
-            select(Appointment::raw('DATE_FORMAT(date, "%d") as date'),
-                     Appointment::raw('SUM(CASE WHEN status = "pending" THEN 1 ELSE 0 END) as pending_count'),
-                     Appointment::raw('SUM(CASE WHEN status = "cancel" THEN 1 ELSE 0 END) as cancel_count'))
-            ->whereRaw('MONTH(date) = MONTH(NOW())')
-            ->whereRaw('YEAR(date) = YEAR(NOW())')
-            ->groupBy(Appointment::raw('date'))
-            ->get();
-
-      $data1 = Appointment::select(Appointment::raw('DATE(date) as tanggal'), Appointment::raw('COUNT(*) as jumlah'))
-        ->where('date', '>=', Appointment::raw("DATE_FORMAT(NOW(), '%Y-%m-01')"))
-        ->where('status', '=', 'cancel')
-        ->groupBy('tanggal')
+      $data = Appointment::select(
+        Appointment::raw('DATE_FORMAT(date, "%d") as date'),
+        Appointment::raw('SUM(CASE WHEN status = "pending" THEN 1 ELSE 0 END) as pending_count'),
+        Appointment::raw('SUM(CASE WHEN status = "cancel" THEN 1 ELSE 0 END) as cancel_count'),
+        Appointment::raw('SUM(CASE WHEN status = "confirm" THEN 1 ELSE 0 END) as confirm_count'),
+        Appointment::raw('COUNT(*) as total')
+      )
+        ->whereRaw('MONTH(date) = MONTH(NOW())')
+        ->whereRaw('YEAR(date) = YEAR(NOW())')
+        ->groupBy(Appointment::raw('date'))
+        ->get();
+      $result = Treatment::select(
+        Treatment::raw('DATE_FORMAT(date, "%d") as date'),
+        Treatment::raw('COUNT(*) as total')
+      )
+        ->whereRaw('MONTH(date) = MONTH(NOW())')
+        ->whereRaw('YEAR(date) = YEAR(NOW())')
+        ->groupBy(Treatment::raw('date'))
         ->get();
 
-      $data_cancel = Appointment::select(Appointment::raw("DATE_FORMAT(date, '%m') AS bulan, COALESCE(COUNT(*), 0) AS total"))
-        ->where('date', '>=', '2023-01-01')
-        ->where('date', '<', Appointment::raw("DATE_FORMAT(NOW(), '%Y-%m-01')"))
-        ->where('status', '=', 'cancel')
-        ->groupBy(Appointment::raw("DATE_FORMAT(date, '%m')"))
-        ->get();
-
-      return  response()->json(['data' => $data], 200);
+      return  response()->json(['data' => $data, 'result' => $result], 200);
     } catch (\Exception $e) {
       return response()->json(['data' => $e->getMessage()], 500);
     }

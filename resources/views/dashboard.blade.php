@@ -270,67 +270,103 @@
             getDataChart('http://localhost:8000/this_month');
             async function getDataChart(url) {
                 const isi_data = await fetchDataBar(url);
-                console.log(isi_data);
                 const dateToday = (new Date()).getDate()
                 const dates = Array.from(Array(dateToday).keys(), i => (i + 1).toString().padStart(2, '0'));
                 let datas = []
+                let results = []
 
                 for (let x = 1; x <= dateToday; x++) {
-                    const result = isi_data.data.find(item => parseInt(item.date) === x);
-                    if (result) {
-                        datas.push({
-                            "pending": result.pending_count,
-                            'cancel': result.cancel_count
-                        })
-                    } else {
-                        datas.push({
-                            "pending": 0,
-                            'cancel': 0
-                        })
-                    }
+                    datas.push(isi_data.data.find(e => parseInt(e.date) === x) ? {
+                        "pending": isi_data.data.find(e => parseInt(e.date) === x).pending_count,
+                        "confirm": isi_data.data.find(e => parseInt(e.date) === x).confirm_count,
+                        "cancel": isi_data.data.find(e => parseInt(e.date) === x).cancel_count
+                    } : {
+                        "pending": 0,
+                        "confirm" : 0,
+                        "cancel": 0
+                    });
+                    // const result = isi_data.data.find(e => parseInt(e.date) === x);
+                    // if (result) {
+                    //     datas.push({
+                    //         "pending": result.pending_count,
+                    //         'cancel': result.cancel_count
+                    //     })
+                    // } else {
+                    //     datas.push({
+                    //         "pending": 0,
+                    //         'cancel': 0
+                    //     })
+                    // }
+                    results.push(isi_data.result.find(e => parseInt(e.date) === x) ? {
+                        "total": isi_data.result.find(e => parseInt(e.date) === x).total
+                    } : {
+                        "total": 0
+                    })
                 }
-                const pending =  datas.map(e=>e.pending)
-                const cancel =  datas.map(e=>e.cancel)
-                console.log(pending,cancel);
+                const pending = datas.map(e => e.pending)
+                const cancel = datas.map(e => e.cancel)
+                const confirm = datas.map(e=>e.confirm)
+                const total = results.map(e => e.total)
 
                 var ctx2 = document.getElementById("chart-line").getContext("2d");
+                // purple colors
                 var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
                 gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
                 gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
                 gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)');
-                //purple colors
-                var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
-                gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
-                gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-                gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+
                 new Chart(ctx2, {
                     type: "line",
                     data: {
                         labels: dates,
                         datasets: [{
-                                label: "Pending",
+                                label: "Jadwal Pending",
                                 tension: 0.4,
                                 borderWidth: 0,
                                 pointRadius: 0,
-                                borderColor: "#cb0c9f",
+                                borderColor: "#blue",
                                 borderWidth: 3,
-                                backgroundColor: gradientStroke1,
-                                fill: true,
-                                data:pending,
+                                backgroundColor: 'blue',
+                                fill: false,
+                                data: pending,
                                 maxBarThickness: 6
                             },
                             {
-                                label: "Cancel",
+                                label: "Jadwal Di Cancel",
                                 tension: 0.4,
                                 borderWidth: 0,
                                 pointRadius: 0,
-                                borderColor: "#3A416F",
+                                borderColor: "red",
                                 borderWidth: 3,
-                                backgroundColor: gradientStroke2,
-                                fill: true,
+                                backgroundColor: 'red',
+                                fill: false,
                                 data: cancel,
                                 maxBarThickness: 6
                             },
+                            {
+                                label: "Jadwal Di Confirm",
+                                tension: 0.4,
+                                borderWidth: 0,
+                                pointRadius: 0,
+                                borderColor: "yellow",
+                                borderWidth: 3,
+                                backgroundColor: 'yellow',
+                                fill: false,
+                                data: confirm,
+                                maxBarThickness: 6
+                            },
+                            {
+                                label: "Pasien Ditangani",
+                                tension: 0.4,
+                                borderWidth: 0,
+                                pointRadius: 0,
+                                borderColor: "green",
+                                borderWidth: 3,
+                                backgroundColor: 'green',
+                                fill: false,
+                                data: total,
+                                maxBarThickness: 6
+                            }
                         ],
                     },
                     options: {
