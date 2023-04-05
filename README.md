@@ -1,9 +1,14 @@
-# [Soft UI Dashboard Laravel](https://soft-ui-dashboard-laravel.creative-tim.com/login)
 
-![version](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![license](https://img.shields.io/badge/license-MIT-blue.svg)
-[![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/soft-ui-dashboard-laravel.svg)](https://github.com/creativetimofficial/soft-ui-dashboard-laravel/issues?q=is%3Aopen+is%3Aissue)
-[![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/soft-ui-dashboard-laravel.svg)](https://github.com/creativetimofficial/soft-ui-dashboard-laravel/issues?q=is%3Aissue+is%3Aclosed)
+## Installation
+
+1. Unzip the downloaded archive
+2. Copy and paste **soft-ui-dashboard-laravel-master** folder in your **projects** folder. Rename the folder to your project's name
+3. In your terminal run `composer install`
+4. Copy `.env.example` to `.env` and updated the configurations (mainly the database configuration)
+5. In your terminal run `php artisan key:generate`
+6. Run `php artisan migrate --seed` to create the database tables and seed the roles and users tables
+note :  u can run `php artisan migrate --class=DataPatient` for specefic seeder
+7. Run `php artisan storage:link` to create the storage symlink (if you are using **Vagrant** with **Homestead** for development, remember to ssh into your virtual machine and run the command from there).
 
 
 *Frontend version*: Soft UI Dashboard v1.0.0. More info at https://www.creative-tim.com/product/soft-ui-dashboard
@@ -36,33 +41,32 @@ If you want to get more features, go PRO with [Soft UI Dashboard PRO Laravel](ht
 
 ## Table of Contents
 
-- [Soft UI Dashboard Laravel](#soft-ui-dashboard-laravel)
-  - [Free Frontend Web App for Laravel](#free-frontend-web-app-for-laravel)
-  - [What am I getting?](#what-am-i-getting)
-  - [Free for personal and commercial projects](#free-for-personal-and-commercial-projects)
-  - [Detailed documentation and example pages](#detailed-documentation-and-example-pages)
-  - [Table of Contents](#table-of-contents)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Versions](#versions)
-  - [Demo](#demo)
-  - [Documentation](#documentation)
-    - [Login](#login)
-    - [Register](#register)
-    - [Forgot Password](#forgot-password)
-    - [Reset Password](#reset-password)
-    - [My Profile](#my-profile)
-    - [Dashboard](#dashboard)
-  - [File Structure](#file-structure)
-  - [Browser Support](#browser-support)
-  - [Reporting Issues](#reporting-issues)
-  - [Licensing](#licensing)
-  - [Useful Links](#useful-links)
-    - [Social Media](#social-media)
-    - [Creative Tim](#creative-tim)
-    - [Updivision:](#updivision)
-  - [Credits](#credits)
+- [Installation](#installation)
+- [Free Frontend Web App for Laravel](#free-frontend-web-app-for-laravel)
+- [What am I getting?](#what-am-i-getting)
+- [Free for personal and commercial projects](#free-for-personal-and-commercial-projects)
+- [Detailed documentation and example pages](#detailed-documentation-and-example-pages)
+- [Table of Contents](#table-of-contents)
+- [Prerequisites](#prerequisites)
+- [Usage](#usage)
+- [Versions](#versions)
+- [Demo](#demo)
+- [Documentation](#documentation)
+  - [Login](#login)
+  - [Register](#register)
+  - [Forgot Password](#forgot-password)
+  - [Reset Password](#reset-password)
+  - [My Profile](#my-profile)
+  - [Dashboard](#dashboard)
+- [File Structure](#file-structure)
+- [Browser Support](#browser-support)
+- [Reporting Issues](#reporting-issues)
+- [Licensing](#licensing)
+- [Useful Links](#useful-links)
+  - [Social Media](#social-media)
+  - [Creative Tim](#creative-tim)
+  - [Updivision:](#updivision)
+- [Credits](#credits)
 
 ## Prerequisites
 
@@ -76,16 +80,6 @@ Also, you will need to install Composer: https://getcomposer.org/doc/00-intro.md
 And Laravel: https://laravel.com/docs/9.x/installation
 
 
-## Installation
-
-1. Unzip the downloaded archive
-2. Copy and paste **soft-ui-dashboard-laravel-master** folder in your **projects** folder. Rename the folder to your project's name
-3. In your terminal run `composer install`
-4. Copy `.env.example` to `.env` and updated the configurations (mainly the database configuration)
-5. In your terminal run `php artisan key:generate`
-6. Run `php artisan migrate --seed` to create the database tables and seed the roles and users tables
-note :  u can run `php artisan migrate --class=DataPatient` for specefic seeder
-7. Run `php artisan storage:link` to create the storage symlink (if you are using **Vagrant** with **Homestead** for development, remember to ssh into your virtual machine and run the command from there).
 
 ## Usage
 Register a user or login with default user **admin@softui.com** and password **secret** from your database and start testing (make sure to run the migrations and seeders for these credentials to be available).
