@@ -6,9 +6,10 @@
 3. In your terminal run `composer install`
 4. Copy `.env.example` to `.env` and updated the configurations (mainly the database configuration)
 5. In your terminal run `php artisan key:generate`
-6. Run `php artisan migrate --seed` to create the database tables and seed the roles and users tables
+6. Run `php artisan migrate --seed` to create the database tables and seed the roles and users tables, to revert `php artisan migrate:rollback`
 note :  u can run `php artisan migrate --class=DataPatient` for specefic seeder
 7. Run `php artisan storage:link` to create the storage symlink (if you are using **Vagrant** with **Homestead** for development, remember to ssh into your virtual machine and run the command from there).
+
 
 
 *Frontend version*: Soft UI Dashboard v1.0.0. More info at https://www.creative-tim.com/product/soft-ui-dashboard
@@ -16,36 +17,10 @@ note :  u can run `php artisan migrate --class=DataPatient` for specefic seeder
 [<img src="https://s3.amazonaws.com/creativetim_bucket/products/602/original/soft-ui-dashboard-laravel.jpg" width="100%" />](https://soft-ui-dashboard-laravel.creative-tim.com/dashboard)
 
 
-## Free Frontend Web App for Laravel
-What happens when you combine Soft UI, one of the hottest design trends right now, and Laravel?  We've partnered with [UPDIVISION](https://updivision.com/) to create the ultimate design & development toolbox.
-
-Soft UI Dashboard Laravel comes with dozens of handcrafted UI elements tailored for Bootstrap 5 and an out of the box Laravel backend.
-
-## What am I getting?
-You're getting a multi-purpose tool for building complex apps.
-
-Soft UI Dashboard PRO Laravel at a glance:
-* 70 handcrafted UI components. From buttons and inputs to navbars and cards, everything is designed to create visually cohesive interfaces.
-* 7 example pages to get you started
-* fully-functional authentication system, register and user profile editing features built with Laravel
-* Documentation for each component so you can get started fast
-
-## Free for personal and commercial projects
-Whether you're working on a side project or delivering to a client, we've got you covered. Soft UI Dashboard Laravel is released under MIT license, so you can use it both for personal and commercial projects for free. All you need to do is start coding.
-
-
-## Detailed documentation and example pages
-We also included detailed documentation for every component and feature so you can follow along. The pre-built example pages give you a quick glimpse of what Soft UI Dashboard Laravel has to offer so you can get started in no time.
-
-If you want to get more features, go PRO with [Soft UI Dashboard PRO Laravel](https://www.creative-tim.com/product/soft-ui-dashboard-pro-laravel).
 
 ## Table of Contents
 
 - [Installation](#installation)
-- [Free Frontend Web App for Laravel](#free-frontend-web-app-for-laravel)
-- [What am I getting?](#what-am-i-getting)
-- [Free for personal and commercial projects](#free-for-personal-and-commercial-projects)
-- [Detailed documentation and example pages](#detailed-documentation-and-example-pages)
 - [Table of Contents](#table-of-contents)
 - [Prerequisites](#prerequisites)
 - [Usage](#usage)
