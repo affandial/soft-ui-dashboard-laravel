@@ -132,9 +132,9 @@
                 </div>
                 {{-- <h6 class="ms-2 mt-4 mb-0"> Total Appointment Users </h6> --}}
                 <div class="container border-radius-lg">
-                    Data grafik pasien yang membuat janji / jadwal untuk pemeriksaan di klinik Gigi dari awal tahun untuk
-                    memantau proses penjadwalan pasien
-                    kebelakang
+                    Grafik Jadwal Pasien
+                    <p> Untuk memantau progress penjadwalan pasien mulai dari awal tahun di Klinik GIgi Jayanti
+                    kebelakang </p>
                 </div>
             </div>
         </div>
