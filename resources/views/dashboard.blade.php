@@ -1,6 +1,5 @@
 @extends('layouts.user_type.auth')
-
-
+@if ( auth()->user()->username === "admin")
 @section('content')
     @csrf
     @if (session('status'))
@@ -433,3 +432,6 @@
         }
     </script>
 @endpush
+
+@endif
+

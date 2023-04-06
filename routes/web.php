@@ -23,8 +23,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['middleware' => ['auth:teacher']], function () {
+  Route::get('/test', [HomeController::class, 'teacher'])->name('test');
+  Route::get('/keluar', [SessionsController::class, 'destroy']);});
 
-Route::group(['middleware' => 'auth'], function () {
+
+
+Route::group(['middleware' => ['auth:web']], function () {
 
   Route::get('/', [HomeController::class, 'home']);
   Route::get('dashboard/{status?}', [DashboardController::class, 'index']);
